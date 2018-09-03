@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class PageViewController: UIPageViewController, UIScrollViewDelegate
 {
@@ -17,9 +18,9 @@ class PageViewController: UIPageViewController, UIScrollViewDelegate
 
     fileprivate lazy var pages: [UIViewController] = {
         return [
-            self.getViewController(withIdentifier: "WelcomeViewController"),
-            self.getViewController(withIdentifier: "GetStartedViewController"),
-            self.getViewController(withIdentifier: "RegisterViewController")
+            self.getViewController(withIdentifier: UIViewController.WELCOME_VC),
+            self.getViewController(withIdentifier: UIViewController.GET_STARTED_VC),
+            self.getViewController(withIdentifier: UIViewController.REGISTER_VC)
         ]
     }()
     
@@ -28,6 +29,10 @@ class PageViewController: UIPageViewController, UIScrollViewDelegate
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: identifier)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -42,6 +47,20 @@ class PageViewController: UIPageViewController, UIScrollViewDelegate
             if view is UIScrollView {
                 (view as! UIScrollView).delegate =  self
                 break
+            }
+        }
+        
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if user != nil {
+                let _: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let newPageViewController = MainPageController()
+                //                    transitionStyle:
+                //                    UIPageViewControllerTransitionStyle.scroll, navigationOrientation:
+                //                    UIPageViewControllerNavigationOrientation.horizontal, options: nil)
+                self.present(newPageViewController, animated: false, completion: nil)
+                //                let loggedInViewController = storyBoard.instantiateViewController(withIdentifier: UIViewController.MAIN_PAGE_VC)
+                //                self.present(loggedInViewController, animated: false, completion: nil)
+            } else {
             }
         }
     }
@@ -63,6 +82,7 @@ class PageViewController: UIPageViewController, UIScrollViewDelegate
         else {
             cur = pages[ind]
         }
+        
         self.setViewControllers([cur], direction: direct, animated: true, completion: nil)
         currentIndex = 2
         lastPage = true
@@ -82,7 +102,7 @@ class PageViewController: UIPageViewController, UIScrollViewDelegate
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
+        
         if (lastPage){
             return
         }
@@ -151,4 +171,15 @@ extension PageViewController: UIPageViewControllerDataSource
 
 extension PageViewController: UIPageViewControllerDelegate { }
 
+//extension FirstLaunch {
+//
+//    static func alwaysFirst() -> FirstLaunch {
+//        return FirstLaunch(getWasLaunchedBefore: { return false }, setWasLaunchedBefore: { _ in })
+//    }
+//}
+//
+//let alwaysFirstLaunch = FirstLaunch.alwaysFirst()
+//if alwaysFirstLaunch.isFirstLaunch {
+//    // will always execute
+//}
 

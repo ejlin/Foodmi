@@ -7,15 +7,26 @@
 //
 
 import UIKit
+import Firebase
+import GooglePlaces
+import GooglePlacePicker
+import MaterialComponents.MaterialActivityIndicator
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        GMSPlacesClient.provideAPIKey("AIzaSyAQooDaN_ypw1fzXIVg6bEo4OFIQwyodeY")
+        //GMSServices.provideAPIKey("AIzaSyAQooDaN_ypw1fzXIVg6bEo4OFIQwyodeY")
+        FirebaseApp.configure()
+        
+       // setViewControllers([firstVC], direction: .forward, animated: false, completion: nil)
+
+        
         return true
     }
 

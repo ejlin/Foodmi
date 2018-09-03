@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		094A0D412134FAC6000C45C0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D402134FAC6000C45C0 /* SettingsViewController.swift */; };
+		094A0D432134FEF7000C45C0 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D422134FEF7000C45C0 /* WelcomeViewController.swift */; };
+		094A0D452134FFE8000C45C0 /* GetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D442134FFE8000C45C0 /* GetStartedViewController.swift */; };
+		094A0D4721350062000C45C0 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D4621350062000C45C0 /* RegisterViewController.swift */; };
+		094A0D49213500EE000C45C0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D48213500EE000C45C0 /* LoginViewController.swift */; };
+		094A0D4B2135013C000C45C0 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D4A2135013C000C45C0 /* SignUpViewController.swift */; };
 		09900FAD212C8E530051432D /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09900FAC212C8E530051432D /* KeyboardLayoutConstraint.swift */; };
 		09CDC8EA21269B82001E91BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDC8E921269B82001E91BB /* AppDelegate.swift */; };
 		09CDC8EC21269B82001E91BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDC8EB21269B82001E91BB /* ViewController.swift */; };
@@ -14,9 +20,21 @@
 		09CDC8F121269B83001E91BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09CDC8F021269B83001E91BB /* Assets.xcassets */; };
 		09CDC8F421269B83001E91BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09CDC8F221269B83001E91BB /* LaunchScreen.storyboard */; };
 		09CDC9062127704F001E91BB /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDC9052127704F001E91BB /* PageViewController.swift */; };
+		09CEBA862138B63300AD3F62 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CEBA852138B63300AD3F62 /* MainPageViewController.swift */; };
+		09CEBA882138B64200AD3F62 /* MainPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CEBA872138B64200AD3F62 /* MainPageController.swift */; };
+		09CEBA8A2139D6F800AD3F62 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CEBA892139D6F800AD3F62 /* ProfileViewController.swift */; };
+		09CEBA8C213B5AB500AD3F62 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CEBA8B213B5AB500AD3F62 /* ImagePickerManager.swift */; };
+		09DA305A2136498500DFC79C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09DA30592136498500DFC79C /* GoogleService-Info.plist */; };
+		3E403104A13DF25FDF3BA298 /* Pods_FirebaseTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB9FD8C1CF6DA551B8732BD /* Pods_FirebaseTest.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		094A0D402134FAC6000C45C0 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		094A0D422134FEF7000C45C0 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		094A0D442134FFE8000C45C0 /* GetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedViewController.swift; sourceTree = "<group>"; };
+		094A0D4621350062000C45C0 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		094A0D48213500EE000C45C0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		094A0D4A2135013C000C45C0 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		09900FAC212C8E530051432D /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		09CDC8E621269B82001E91BB /* FirebaseTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09CDC8E921269B82001E91BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +44,14 @@
 		09CDC8F321269B83001E91BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09CDC8F521269B83001E91BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09CDC9052127704F001E91BB /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		09CEBA852138B63300AD3F62 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
+		09CEBA872138B64200AD3F62 /* MainPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageController.swift; sourceTree = "<group>"; };
+		09CEBA892139D6F800AD3F62 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		09CEBA8B213B5AB500AD3F62 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
+		09DA30592136498500DFC79C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1722CE7AE8B2F9428DA7F21E /* Pods-FirebaseTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-FirebaseTest/Pods-FirebaseTest.release.xcconfig"; sourceTree = "<group>"; };
+		2DB9FD8C1CF6DA551B8732BD /* Pods_FirebaseTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FirebaseTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF80BA745F2E8D148CCB2689 /* Pods-FirebaseTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FirebaseTest/Pods-FirebaseTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E403104A13DF25FDF3BA298 /* Pods_FirebaseTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +71,8 @@
 			children = (
 				09CDC8E821269B82001E91BB /* FirebaseTest */,
 				09CDC8E721269B82001E91BB /* Products */,
+				74BFCFF55F5AB945274BED66 /* Pods */,
+				CD4A372B806D926AFDBB2740 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,16 +87,44 @@
 		09CDC8E821269B82001E91BB /* FirebaseTest */ = {
 			isa = PBXGroup;
 			children = (
+				09DA30592136498500DFC79C /* GoogleService-Info.plist */,
 				09CDC8E921269B82001E91BB /* AppDelegate.swift */,
 				09CDC8EB21269B82001E91BB /* ViewController.swift */,
+				094A0D4A2135013C000C45C0 /* SignUpViewController.swift */,
+				094A0D48213500EE000C45C0 /* LoginViewController.swift */,
+				094A0D4621350062000C45C0 /* RegisterViewController.swift */,
+				094A0D442134FFE8000C45C0 /* GetStartedViewController.swift */,
+				094A0D422134FEF7000C45C0 /* WelcomeViewController.swift */,
+				094A0D402134FAC6000C45C0 /* SettingsViewController.swift */,
 				09900FAC212C8E530051432D /* KeyboardLayoutConstraint.swift */,
 				09CDC8ED21269B82001E91BB /* Main.storyboard */,
+				09CEBA892139D6F800AD3F62 /* ProfileViewController.swift */,
+				09CEBA8B213B5AB500AD3F62 /* ImagePickerManager.swift */,
 				09CDC8F021269B83001E91BB /* Assets.xcassets */,
 				09CDC8F221269B83001E91BB /* LaunchScreen.storyboard */,
 				09CDC8F521269B83001E91BB /* Info.plist */,
 				09CDC9052127704F001E91BB /* PageViewController.swift */,
+				09CEBA852138B63300AD3F62 /* MainPageViewController.swift */,
+				09CEBA872138B64200AD3F62 /* MainPageController.swift */,
 			);
 			path = FirebaseTest;
+			sourceTree = "<group>";
+		};
+		74BFCFF55F5AB945274BED66 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BF80BA745F2E8D148CCB2689 /* Pods-FirebaseTest.debug.xcconfig */,
+				1722CE7AE8B2F9428DA7F21E /* Pods-FirebaseTest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CD4A372B806D926AFDBB2740 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2DB9FD8C1CF6DA551B8732BD /* Pods_FirebaseTest.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +134,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 09CDC8F821269B83001E91BB /* Build configuration list for PBXNativeTarget "FirebaseTest" */;
 			buildPhases = (
+				2EE97B0F526CF343AF6AEF3E /* [CP] Check Pods Manifest.lock */,
 				09CDC8E221269B82001E91BB /* Sources */,
 				09CDC8E321269B82001E91BB /* Frameworks */,
 				09CDC8E421269B82001E91BB /* Resources */,
+				2F470673FB9A811119E16D0B /* [CP] Embed Pods Frameworks */,
+				87C63D4EAAD9A7F61B562A8A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -129,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09CDC8F421269B83001E91BB /* LaunchScreen.storyboard in Resources */,
+				09DA305A2136498500DFC79C /* GoogleService-Info.plist in Resources */,
 				09CDC8F121269B83001E91BB /* Assets.xcassets in Resources */,
 				09CDC8EF21269B82001E91BB /* Main.storyboard in Resources */,
 			);
@@ -136,14 +197,101 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2EE97B0F526CF343AF6AEF3E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FirebaseTest-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2F470673FB9A811119E16D0B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FirebaseTest/Pods-FirebaseTest-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FirebaseTest/Pods-FirebaseTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		87C63D4EAAD9A7F61B562A8A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FirebaseTest/Pods-FirebaseTest-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FirebaseTest/Pods-FirebaseTest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		09CDC8E221269B82001E91BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				094A0D49213500EE000C45C0 /* LoginViewController.swift in Sources */,
 				09CDC9062127704F001E91BB /* PageViewController.swift in Sources */,
 				09900FAD212C8E530051432D /* KeyboardLayoutConstraint.swift in Sources */,
+				09CEBA8A2139D6F800AD3F62 /* ProfileViewController.swift in Sources */,
+				09CEBA862138B63300AD3F62 /* MainPageViewController.swift in Sources */,
 				09CDC8EC21269B82001E91BB /* ViewController.swift in Sources */,
+				094A0D4B2135013C000C45C0 /* SignUpViewController.swift in Sources */,
+				094A0D4721350062000C45C0 /* RegisterViewController.swift in Sources */,
+				094A0D432134FEF7000C45C0 /* WelcomeViewController.swift in Sources */,
+				09CEBA8C213B5AB500AD3F62 /* ImagePickerManager.swift in Sources */,
+				094A0D412134FAC6000C45C0 /* SettingsViewController.swift in Sources */,
+				094A0D452134FFE8000C45C0 /* GetStartedViewController.swift in Sources */,
+				09CEBA882138B64200AD3F62 /* MainPageController.swift in Sources */,
 				09CDC8EA21269B82001E91BB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +434,7 @@
 		};
 		09CDC8F921269B83001E91BB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF80BA745F2E8D148CCB2689 /* Pods-FirebaseTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -295,7 +444,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ericlin.FirebaseTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericlin.FoodMi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -304,6 +453,7 @@
 		};
 		09CDC8FA21269B83001E91BB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1722CE7AE8B2F9428DA7F21E /* Pods-FirebaseTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -313,7 +463,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ericlin.FirebaseTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericlin.FoodMi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

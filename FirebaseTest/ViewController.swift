@@ -8,49 +8,169 @@
 
 import QuartzCore
 import UIKit
+import FirebaseAuth
+import MapKit
+import GooglePlaces
+import CoreLocation
+import MaterialComponents.MaterialActivityIndicator
 
-class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate {
-    
-    /* Define our MACROS */
-    let SCRN_WIDTH = UIScreen.main.bounds.size.width
-    let SCRN_HEIGHT = UIScreen.main.bounds.size.height
-    let SCRN_FONT_BOLD = "AppleSDGothicNeo-Bold"
-    let SCRN_FONT_MEDIUM = "AppleSDGothicNeo-Medium"
-    let SCRN_MAIN_COLOR = UIColor(rgb: 0x3AAFA9)
-    let SCRN_MAIN_COLOR_DARK = UIColor(rgb: 0x2B7A78)
-    let INVALID_IDX = -1
-    
-    /* Define our various viewControllers */
-    @IBOutlet var welcomeView: UIView!
-    @IBOutlet var getStartedView: UIView!
-    @IBOutlet var registerView: UIView!
-    @IBOutlet var signUpView: UIView!
-    @IBOutlet var loginView: UIView!
-    
-    fileprivate var loginTextFields: [UITextField] = []
-    fileprivate var signUpTextFields: [UITextField] = []
-    
+class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate{
+
+//    var placesClient: GMSPlacesClient!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        if (self.view === welcomeView){
-            createWelcomeView()
-        }
-        else if (self.view === getStartedView ){
-            createGetStartedView()
-        }
-        else if (self.view === registerView){
-            createRegisterView()
-        }
-        else if (self.view === signUpView) {
-            createSignUpView()
-        }
-        else if (self.view === loginView) {
-            createLoginView()
-        }
-        self.hideKeyboardWhenTappedAround()
+        //self.hideKeyboardWhenTappedAround()
+    }
+}
+
+class SignUpUIButton: UIButton {
+    var firstName: UITextField?
+    var lastName: UITextField?
+    var email: UITextField?
+    var password: UITextField?
+    var confirmPassword: UITextField?
+}
+
+class LoginUIButton: UIButton {
+    var email: UITextField?
+    var password: UITextField?
+}
+
+class DisplayNameUIButton: UIButton {
+    var firstName: UITextField?
+    var lastName: UITextField?
+}
+
+class AuthenticateRequiredUIButton:UIButton {
+    var email: UITextField?
+    var password: UITextField?
+    var confirmPassword: UITextField?
+}
+
+class RestaurantUIButton:UIButton {
+    var resId: String?
+}
+
+class MapUIButton:UIButton {
+    var name: String?
+    var latitude: String?
+    var longitude: String?
+}
+
+extension UIColor {
+    convenience init(rgb: Int) {
+        self.init(red: CGFloat((rgb >> 16) & 0xFF) / 255.0,
+                  green: CGFloat((rgb >> 8) & 0xFF) / 255.0,
+                  blue: CGFloat((rgb & 0xFF)) / 255.0, alpha: 1.0)
+    }
+}
+
+extension UIImage {
+    var circle: UIImage {
+        let square = size.width < size.height ? CGSize(width: size.width, height: size.width) : CGSize(width: size.height, height: size.height)
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
+        imageView.image = self
+        imageView.layer.cornerRadius = square.width/2
+        imageView.layer.masksToBounds = true
+        UIGraphicsBeginImageContext(imageView.bounds.size)
+        imageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result!
+    }
+}  
+
+extension UITextField {
+
+    func setBottomLine(borderColor: UIColor) {
+
+        self.borderStyle = UITextBorderStyle.none
+        self.backgroundColor = UIColor.clear
+
+        let borderLine = UIView()
+        let height = 1.0
+        borderLine.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
+
+        borderLine.backgroundColor = borderColor
+        self.addSubview(borderLine)
+    }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
 
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+extension UIView {
+
+    struct Holder {
+        static var myActivityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    }
+
+    func showActivityIndicator(){
+        Holder.myActivityIndicator.color = UIViewController.SCRN_MAIN_COLOR
+        Holder.myActivityIndicator.center = CGPoint(x: UIViewController.SCRN_WIDTH*0.5, y: UIViewController.SCRN_HEIGHT*0.5)
+        Holder.myActivityIndicator.hidesWhenStopped = true
+        Holder.myActivityIndicator.startAnimating()
+        Holder.myActivityIndicator.backgroundColor = UIViewController.SCRN_GREY_LIGHT
+        Holder.myActivityIndicator.layer.cornerRadius = 5
+        self.isUserInteractionEnabled = false
+        Holder.myActivityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        self.addSubview(Holder.myActivityIndicator)
+    }
+
+    func hideActivityIndicator() {
+        self.isUserInteractionEnabled = true
+        Holder.myActivityIndicator.stopAnimating()
+    }
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+}
+
+extension UIViewController{
+
+    /* Define our Macros for View Controllers */
+    static let SCRN_WIDTH = UIScreen.main.bounds.size.width
+    static let SCRN_HEIGHT = UIScreen.main.bounds.size.height
+    static let SCRN_FONT_BOLD = "DINAlternate-Bold" //"AppleSDGothicNeo-Bold"
+    static let SCRN_FONT_MEDIUM = "DINAlternate-Medium"  //"AppleSDGothicNeo-Medium"
+    static let SCRN_MAIN_COLOR = UIColor(rgb: 0xff0000) //0x3AAFA9)
+    static let SCRN_MAIN_COLOR_DARK = UIColor(rgb: 0xA70000) //0x2B7A78)
+    static let SCRN_MAIN_COLOR_LIGHT = UIColor(rgb: 0xff5252)//0xD3D3D3) //0xDEF2F1)
+    static let SCRN_GREY = UIColor(rgb: 0x696969)
+    static let SCRN_GREY_LIGHT = UIColor(rgb: 0xdcdee2)
+    static let SCRN_GREY_LIGHT_LIGHT = UIColor(rgb: 0xe9ebee)
+    static let SCRN_BLACK = UIColor(rgb: 0x000000)
+    static let SCRN_WHITE = UIColor(rgb: 0xFFFFFF)
+    static let SCRN_INVALID_INPUT_RED = UIColor(rgb: 0xE75050)
+    static let INVALID_IDX = -1
+    
+    static let googleAPIKey = "AIzaSyDakn3wICSQZRJcVnoqqYOB6r1T1uABank"
+    static let ZOMATO_KEY = "68943b6fd24be6f3409756e1a22d80d7"
+    
+    static let WELCOME_VC = "welcomeViewController"
+    static let GET_STARTED_VC = "getStartedViewController"
+    static let REGISTER_VC = "registerViewController"
+    static let LOGIN_VC = "loginViewController"
+    static let SIGN_UP_VC = "signUpViewController"
+    static let MAIN_PAGE_VC = "mainPageViewController"
+    static let SETTINGS_VC = "settingsViewController"
+    static let RESTAURANT_INFO_VC = "restaurantInfoViewController"
+    static let PROFILE_VC = "profileViewController"
+    
     /* Function Name: createUILabel()
      * Return Type: None
      * Parameters: This function takes in 7 parameters
@@ -67,10 +187,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
      *             .layer.masksToBounds - true by default
      *             .numberOfLines - 0 by default
      */
-    
+
     func createUILabel(backgroundColor: UIColor, textColor: UIColor, labelText: String,
                        fontSize: CGFloat, fontName: String, cornerRadius: CGFloat,
-                       frame: CGRect){
+                       frame: CGRect) -> UILabel{
         let myLabel = UILabel(frame: frame)
         myLabel.text = labelText
         myLabel.textColor = textColor
@@ -81,8 +201,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
         myLabel.layer.masksToBounds = true
         myLabel.numberOfLines = 0
         self.view.addSubview(myLabel)
+        return myLabel
     }
-    
+
     /* Function Name: createUIImage()
      * Return Type: None
      * Parameters: This function takes in 2 parameters
@@ -91,14 +212,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
      * Description: This function will create a UIImage according to the specified parameters and then add
      * it to the current viewController's view.
      */
-    
-    func createUIImage(imageName: String, imageFrame: CGRect){
+
+    func createUIImage(imageName: String, imageFrame: CGRect) -> UIImageView{
         let myImage = UIImage(named: imageName)
         let myImageView = UIImageView(image: myImage!)
         myImageView.frame = imageFrame
         self.view.addSubview(myImageView)
+        return myImageView
     }
-    
+
     /* Function Name: createUITextField()
      * Return Type: None
      * Parameters: This function takes in 5 parameters
@@ -110,7 +232,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
      * Description: This function will create a UITextField according to the specified parameters and then add
      * it to the current viewController's view.
      */
-    
+
     func createUITextField(placeholder: String, textColor: UIColor, bottomLineColor: UIColor, isSecureTextEntry: Bool, frame: CGRect) -> UITextField{
         let myTextField = UITextField(frame: frame)
         myTextField.placeholder = placeholder
@@ -120,344 +242,132 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
         self.view.addSubview(myTextField)
         return myTextField
     }
+
+    func createUIButton(textColor: UIColor, titleText: String, fontName: String, fontSize: CGFloat, alignment: UIControlContentHorizontalAlignment, backgroundColor: UIColor, cornerRadius: CGFloat, tag: Int, frame: CGRect) -> UIButton {
+        let myButton = UIButton(frame: frame)
+        myButton.contentHorizontalAlignment = alignment
+        myButton.setTitleColor(textColor, for: .normal)
+        myButton.titleLabel?.font = UIFont(name: fontName, size: fontSize)
+        myButton.backgroundColor = backgroundColor
+        myButton.layer.cornerRadius = cornerRadius
+        myButton.layer.masksToBounds = true
+        myButton.setTitle(titleText, for: .normal)
+        myButton.tag = tag
+        self.view.addSubview(myButton)
+        return myButton
+    }
+
+    func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
     
-    /* Function Name: textFieldShouldReturn()
-     * Return Type: Bool
-     * Parameters: This function takes in 1 parameter
-     *             textField: UITextField - This is the current UITextField
-     * Description: This function controls which action to execute when the "return" key is
-     * pressed for a specific text field.
-     */
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func createNavigationBar(withIdentifier identifier: String) {
         
-        /* Handle when we are on the sign up page */
-        if (self.view === signUpView && (textField.text?.count)! > 0){
-            if textField == signUpTextFields[0] {
-                textField.resignFirstResponder()
-                signUpTextFields[1].becomeFirstResponder()
-            } else if textField == signUpTextFields[1] {
-                textField.resignFirstResponder()
-                signUpTextFields[2].becomeFirstResponder()
-            } else if textField == signUpTextFields[2] {
-                textField.resignFirstResponder()
-                signUpTextFields[3].becomeFirstResponder()
-            } else if textField == signUpTextFields[3] {
-                textField.resignFirstResponder()
-                signUpTextFields[4].becomeFirstResponder()
-            }
+        let navigationBarLabelBorder = UILabel(frame: CGRect(x: 0, y: UIViewController.SCRN_HEIGHT - 50, width: UIViewController.SCRN_WIDTH, height: 1))
+        navigationBarLabelBorder.backgroundColor = UIViewController.SCRN_GREY_LIGHT
+        
+        let navigationBarLabel = UILabel(frame: CGRect(x: 0, y: UIViewController.SCRN_HEIGHT - 49, width: UIViewController.SCRN_WIDTH, height: 49))
+        navigationBarLabel.backgroundColor = UIViewController.SCRN_WHITE
+        
+        let navigationBarHome = UIImage(named: "home_grey")
+        let navigationBarHomeButton = UIButton(frame: CGRect(x: (UIViewController.SCRN_WIDTH - 160) / 5, y: UIViewController.SCRN_HEIGHT - 40, width: 30, height: 30))
+        navigationBarHomeButton.setImage(navigationBarHome, for: UIControlState.normal)
+        navigationBarHomeButton.tag = 1
+        navigationBarHomeButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
+        
+        
+        let navigationBarProfile = UIImage(named: "profile_bar_grey")
+        let navigationBarProfileButton = UIButton(frame: CGRect(x: 3*(UIViewController.SCRN_WIDTH - 160) / 5 + 2*(UIViewController.SCRN_WIDTH - 160)/5, y: UIViewController.SCRN_HEIGHT - 40, width: 30, height: 30))
+        navigationBarProfileButton.setImage(navigationBarProfile, for: UIControlState.normal)
+        navigationBarProfileButton.tag = 2
+        navigationBarProfileButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
+        
+        
+        let navigationBarFeed = UIImage(named: "feed_grey")
+        let navigationBarFeedButton = UIButton(frame: CGRect(x: 2*(UIViewController.SCRN_WIDTH - 160) / 5 + (UIViewController.SCRN_WIDTH - 160)/5, y: UIViewController.SCRN_HEIGHT - 40, width: 30, height: 30))
+        navigationBarFeedButton.setImage(navigationBarFeed, for: UIControlState.normal)
+        navigationBarFeedButton.tag = 3
+        navigationBarFeedButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
+        
+        
+        let navigationBarSettings = UIImage(named: "settings_grey")
+        let navigationBarSettingsButton = UIButton(frame: CGRect(x: 4*(UIViewController.SCRN_WIDTH - 160) / 5 + 3*(UIViewController.SCRN_WIDTH - 160)/5, y: UIViewController.SCRN_HEIGHT - 40, width: 30, height: 30))
+        navigationBarSettingsButton.setImage(navigationBarSettings, for: UIControlState.normal)
+        navigationBarSettingsButton.tag = 4
+        navigationBarSettingsButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
+        
+        
+        switch identifier {
+            case "main_page":
+                navigationBarHomeButton.setImage(UIImage(named: "home_red"), for: UIControlState.normal)
+                break;
+            case "feed":
+                navigationBarFeedButton.setImage(UIImage(named: "feed_red"), for: UIControlState.normal)
+                break;
+            case "profile":
+                navigationBarProfileButton.setImage(UIImage(named: "profile_bar_red"), for: UIControlState.normal)
+                break;
+            case "settings":
+                navigationBarSettingsButton.setImage(UIImage(named: "settings_red"), for: UIControlState.normal)
+                break;
+            default:
+                break;
         }
         
-        /* Handle when we are on the login page */
-        if (self.view === loginView && (textField.text?.count)! > 0) {
-            if textField == loginTextFields[0] {
-                textField.resignFirstResponder()
-                loginTextFields[1].becomeFirstResponder()
-            }
-        }
-        return true
-    }
-    
-    /* Function Name: createWelcomeView()
-     * Return Type: None
-     * Parameters: None
-     * Description: Create the view for our welcome screen. This is the first screen that
-     * users see after launching the app if they have never opened the app before
-     */
-    
-    func createWelcomeView() {
-        createUILabel(backgroundColor: .clear,
-                      textColor: .white,
-                      labelText: "Welcome",
-                      fontSize: 30.0,
-                      fontName: SCRN_FONT_BOLD,
-                      cornerRadius: 0,
-                      frame: CGRect(x: SCRN_WIDTH*0.5 - 100, y: SCRN_HEIGHT*0.5 - 225, width: 200, height: 50))
-    }
-    
-    /* Function Name: createGetStartedView()
-     * Return Type: None
-     * Parameters: None
-     * Description: Create the view for our tutorial screen. This is the second screen that
-     * users see after launching the app if they have never opened the app before. This screen
-     * will display to the users how to use the app.
-     */
-    
-    func createGetStartedView() {
-        
-        createUIImage(imageName: "restaurant",
-                      imageFrame: CGRect(x: SCRN_WIDTH*0.5 + 60, y: SCRN_HEIGHT*0.5 - 190, width: 60, height: 60))
-        createUIImage(imageName: "arrowPointBottom",
-                      imageFrame: CGRect(x: SCRN_WIDTH*0.5 + 10, y: SCRN_HEIGHT*0.5 - 110, width: 75, height: 75))
-        createUIImage(imageName: "ratings",
-                      imageFrame: CGRect(x: SCRN_WIDTH*0.5 - 85, y: SCRN_HEIGHT*0.5 - 10, width: 170, height: 30))
-        createUIImage(imageName: "arrowPointRight",
-                      imageFrame: CGRect(x: SCRN_WIDTH*0.5 - 80, y: SCRN_HEIGHT*0.5 + 90, width: 75, height: 75))
-        createUIImage(imageName: "recommendation",
-                      imageFrame: CGRect(x: SCRN_WIDTH*0.5 - 140, y: SCRN_HEIGHT*0.5 + 190, width: 60, height: 60))
-
-        createUILabel(backgroundColor: .clear,
-                      textColor: .white,
-                      labelText: "How It Works:",
-                      fontSize: 30.0,
-                      fontName: SCRN_FONT_BOLD,
-                      cornerRadius: 0,
-                      frame: CGRect(x: SCRN_WIDTH*0.5 - 100, y: SCRN_HEIGHT*0.5 - 275, width: 200, height: 50))
-        createUILabel(backgroundColor: SCRN_MAIN_COLOR_DARK,
-                      textColor: .white,
-                      labelText: "Mark restaurants you've visited",
-                      fontSize: 18.0,
-                      fontName: SCRN_FONT_MEDIUM,
-                      cornerRadius: 5,
-                      frame: CGRect(x: SCRN_WIDTH*0.5 - 130, y: SCRN_HEIGHT*0.5 - 190, width: 160, height: 60))
-        createUILabel(backgroundColor: SCRN_MAIN_COLOR_DARK,
-                      textColor: .white,
-                      labelText: "Rate them!",
-                      fontSize: 18.0,
-                      fontName: SCRN_FONT_MEDIUM,
-                      cornerRadius: 5,
-                      frame: CGRect(x: SCRN_WIDTH*0.5 - 85, y: SCRN_HEIGHT*0.5 + 30, width: 170, height: 40))
-        createUILabel(backgroundColor: SCRN_MAIN_COLOR_DARK,
-                      textColor: .white,
-                      labelText: "Get restaurant recommendations",
-                      fontSize: 18.0,
-                      fontName: SCRN_FONT_MEDIUM,
-                      cornerRadius: 5,
-                      frame: CGRect(x: SCRN_WIDTH*0.5 - 60, y: SCRN_HEIGHT*0.5 + 190, width: 180, height: 60))
-    }
-    
-    /* Function Name: createRegisterView()
-     * Return Type: None
-     * Parameters: None
-     * Description: Create the view for our login/signup screen. This is the third screen that
-     * users see after launching the app if they have never opened the app before. This screen
-     * will display to the users options to either login to an existing account or sign up for
-     * a new account.
-     */
-    
-    func createRegisterView() {
-        let signUpButton = UIButton(frame: CGRect(x: SCRN_WIDTH*0.5 - 112.5, y: SCRN_HEIGHT*0.5 + 175, width: 225, height: 50))
-        signUpButton.contentHorizontalAlignment = .center
-        signUpButton.setTitleColor(.white, for: .normal)
-        signUpButton.titleLabel?.font =  UIFont(name: SCRN_FONT_MEDIUM, size: 20)
-        signUpButton.backgroundColor = SCRN_MAIN_COLOR_DARK
-        signUpButton.layer.cornerRadius = 5
-        signUpButton.layer.masksToBounds = true
-        signUpButton.setTitle("Sign Up", for: .normal)
-        signUpButton.tag = 1
-        signUpButton.addTarget(self,action:#selector(buttonPressed),
-                          for:.touchUpInside)
-        //signUpButton.addTarget(self, action: #selector(buttonHoldDown), for: UIControlEvents.touchDown)
-        self.view.addSubview(signUpButton)
-        
-        let loginButton = UIButton(frame: CGRect(x: SCRN_WIDTH*0.5 - 112.5, y: SCRN_HEIGHT*0.5 + 105, width: 225, height: 50))
-        loginButton.contentHorizontalAlignment = .center
-        loginButton.setTitleColor(.white, for: .normal)
-        loginButton.titleLabel?.font =  UIFont(name: SCRN_FONT_MEDIUM, size: 20)
-        loginButton.backgroundColor = SCRN_MAIN_COLOR_DARK
-        loginButton.layer.cornerRadius = 5
-        loginButton.layer.masksToBounds = true
-        loginButton.setTitle("Login", for: .normal)
-        loginButton.tag = 2
-        loginButton.addTarget(self,action:#selector(buttonPressed),
-                              for:.touchUpInside)
-        self.view.addSubview(loginButton)
-    }
-    
-    func createLoginView() {
-
-        let backImage = UIImage(named: "back")
-        let backButton = UIButton(frame: CGRect(x: 50, y: 75, width: 25, height: 25))
-        backButton.setImage(backImage, for: UIControlState.normal)
-        backButton.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
-        self.view.addSubview(backButton)
-        
-        createUILabel(backgroundColor: SCRN_MAIN_COLOR,
-                      textColor: .white,
-                      labelText: "Login",
-                      fontSize: 24.0,
-                      fontName: SCRN_FONT_MEDIUM,
-                      cornerRadius: 20,
-                      frame: CGRect(x: SCRN_WIDTH*0.5 - 65, y: 70, width: 130, height: 40))
-        
-        let emailTextField = createUITextField(placeholder: "Email",
-                                               textColor: SCRN_MAIN_COLOR,
-                                               bottomLineColor: SCRN_MAIN_COLOR,
-                                               isSecureTextEntry: false,
-                                               frame: CGRect(x: 50, y: 150, width: SCRN_WIDTH - 100, height: 35))
-        
-        let passwordTextField = createUITextField(placeholder: "Password",
-                                                  textColor: SCRN_MAIN_COLOR,
-                                                  bottomLineColor: SCRN_MAIN_COLOR,
-                                                  isSecureTextEntry: true,
-                                                  frame: CGRect(x: 50, y: 225, width: SCRN_WIDTH - 100, height: 35))
-
-        
-        let forgotPasswordButton = UIButton(frame: CGRect(x: 50, y: 270, width: SCRN_WIDTH - 100, height: 35))
-        forgotPasswordButton.contentHorizontalAlignment = .right
-        forgotPasswordButton.setTitleColor(SCRN_MAIN_COLOR, for: .normal)
-        forgotPasswordButton.titleLabel?.font =  UIFont(name: SCRN_FONT_MEDIUM, size: 14)
-        forgotPasswordButton.setTitle("Forgot Password?", for: .normal)
-        //loginButton.tag = 3
-        //loginButton.addTarget(self,action:#selector(buttonPressed), for:.touchUpInside)
-        self.view.addSubview(forgotPasswordButton)
-        
-        let forwardImage = UIImage(named: "forward")
-        let forwardButton = UIButton(frame: CGRect(x: SCRN_WIDTH - 100, y: SCRN_HEIGHT*0.5 - 10	, width: 50, height: 50))
-        forwardButton.setImage(forwardImage, for: UIControlState.normal)
-        //forwardButton.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
-        self.view.addSubview(forwardButton)
-        
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        loginTextFields.append(emailTextField)
-        loginTextFields.append(passwordTextField)
+        self.view.addSubview((navigationBarLabelBorder))
+        self.view.addSubview(navigationBarLabel)
+        self.view.addSubview(navigationBarHomeButton)
+        self.view.addSubview(navigationBarFeedButton)
+        self.view.addSubview(navigationBarProfileButton)
+        self.view.addSubview(navigationBarSettingsButton)
         
     }
     
-    func createSignUpView() {
+    @objc func navigatePages(sender: UIButton) {
         
-        let backImage = UIImage(named: "back")
-        let backButton = UIButton(frame: CGRect(x: 50, y: 75, width: 25, height: 25))
-        backButton.setImage(backImage, for: UIControlState.normal)
-        backButton.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
-        self.view.addSubview(backButton)
+        var identifier: String?
+        var direction: UIPageViewControllerNavigationDirection?
+        var idx: Int?
         
-        createUILabel(backgroundColor: SCRN_MAIN_COLOR,
-                      textColor: .white,
-                      labelText: "Sign Up",
-                      fontSize: 24.0,
-                      fontName: SCRN_FONT_MEDIUM,
-                      cornerRadius: 20,
-                      frame: CGRect(x: SCRN_WIDTH*0.5 - 65, y: 70, width: 130, height: 40))
-        createUILabel(backgroundColor: .clear,
-                      textColor: SCRN_MAIN_COLOR,
-                      labelText: "By submitting this form, you agree to the Terms & Conditions",
-                      fontSize: 14.0,
-                      fontName: SCRN_FONT_MEDIUM,
-                      cornerRadius: 20,
-                      frame: CGRect(x: 50, y: 505, width: SCRN_WIDTH - 100, height: 35))
-        
-        let firstNameTextField = createUITextField(placeholder: "First Name",
-                                                   textColor: SCRN_MAIN_COLOR,
-                                                   bottomLineColor: SCRN_MAIN_COLOR,
-                                                   isSecureTextEntry: false,
-                                                   frame: CGRect(x: 50, y: 150, width: SCRN_WIDTH - 100, height: 35))
-        let lastNameTextField = createUITextField(placeholder: "Last Name",
-                                                  textColor: SCRN_MAIN_COLOR,
-                                                  bottomLineColor: SCRN_MAIN_COLOR,
-                                                  isSecureTextEntry: false,
-                                                  frame: CGRect(x: 50, y: 225, width: SCRN_WIDTH - 100, height: 35))
-        let emailTextField = createUITextField(placeholder: "Email",
-                                               textColor: SCRN_MAIN_COLOR,
-                                               bottomLineColor: SCRN_MAIN_COLOR,
-                                               isSecureTextEntry: false,
-                                               frame: CGRect(x: 50, y: 300, width: SCRN_WIDTH - 100, height: 35))
-        let passwordTextField = createUITextField(placeholder: "Password",
-                                                  textColor: SCRN_MAIN_COLOR,
-                                                  bottomLineColor: SCRN_MAIN_COLOR,
-                                                  isSecureTextEntry: true,
-                                                  frame: CGRect(x: 50, y: 375, width: SCRN_WIDTH - 100, height: 35))
-        let confirmPasswordTextField = createUITextField(placeholder: "Confirm Password",
-                                                         textColor: SCRN_MAIN_COLOR,
-                                                         bottomLineColor: SCRN_MAIN_COLOR,
-                                                         isSecureTextEntry: true,
-                                                         frame: CGRect(x: 50, y: 450, width: SCRN_WIDTH - 100, height: 35))
-        
-        firstNameTextField.delegate = self
-        lastNameTextField.delegate = self
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        confirmPasswordTextField.delegate = self
-        signUpTextFields.append(firstNameTextField)
-        signUpTextFields.append(lastNameTextField)
-        signUpTextFields.append(emailTextField)
-        signUpTextFields.append(passwordTextField)
-        signUpTextFields.append(confirmPasswordTextField)
-        
-        let forwardImage = UIImage(named: "forward")
-        let forwardButton = UIButton(frame: CGRect(x: SCRN_WIDTH - 100, y: SCRN_HEIGHT - 100, width: 50, height: 50))
-        forwardButton.setImage(forwardImage, for: UIControlState.normal)
-        //forwardButton.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
-        self.view.addSubview(forwardButton)
-        
-        
-    }
-    
-    @IBAction func goToLastPage(_ sender: UIButton!) {
-        goToPage(sender, identifier: "RegisterViewController", direction: .forward, idx: 2)
-    }
-    
-    @objc func buttonHoldDown(sender:UIButton)
-    {
-        sender.backgroundColor = UIColor(rgb: 0xDEF2F1)
-    }
-    
-    @objc func buttonPressed(sender: UIButton!) {
-        sender.backgroundColor = UIColor(rgb: 0x2B7A78)
         switch sender.tag {
-        case 1: goToPage(sender, identifier: "signUpViewController", direction: .forward, idx: INVALID_IDX)
-                break
-        case 2: goToPage(sender, identifier: "loginViewController", direction: .forward, idx: INVALID_IDX)
-                break
-            default: print("default")
-                break
+            case 1:
+                identifier = UIViewController.MAIN_PAGE_VC
+                direction = .forward
+                idx = 1
+                break;
+            case 2:
+                identifier = UIViewController.PROFILE_VC
+                direction = .forward
+                idx = 0
+                break;
+            case 3:
+                identifier = UIViewController.MAIN_PAGE_VC
+                direction = .forward
+                idx = 1
+                break;
+            case 4:
+                identifier = UIViewController.SETTINGS_VC
+                direction = .forward
+                idx = 2
+                break;
+            default:
+                identifier = UIViewController.MAIN_PAGE_VC
+                direction = .forward
+                idx = 1
+                break;
         }
-    }
-    
-    @objc func backButtonPressed(sender:UIButton) {
-        goToPage(sender, identifier: "RegisterViewController", direction: .reverse, idx: 2)
-    }
-    
-    func goToPage(_ sender: UIButton!, identifier: String, direction: UIPageViewControllerNavigationDirection, idx: Int) {
+        
         var candidate: UIViewController = self
         while true {
-            if let pageViewController = candidate as? PageViewController {
-                pageViewController.goSpecificPage(withIdentifier: identifier, direction: direction, index: idx)
+            if let pageViewController = candidate as? MainPageController {
+                pageViewController.goSpecificPageNoAnimate(withIdentifier: identifier!, direction: direction!, index: idx!)
                 break
             }
             guard let next = parent else { break }
             candidate = next
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }
-
-extension UIColor {    
-    convenience init(rgb: Int) {
-        self.init(red: CGFloat((rgb >> 16) & 0xFF) / 255.0, green: CGFloat((rgb >> 8) & 0xFF) / 255.0, blue: CGFloat((rgb & 0xFF)) / 255.0, alpha: 1.0)
-    }
-}
-
-extension UITextField {
-    
-    func setBottomLine(borderColor: UIColor) {
-        
-        self.borderStyle = UITextBorderStyle.none
-        self.backgroundColor = UIColor.clear
-        
-        let borderLine = UIView()
-        let height = 1.0
-        borderLine.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
-        
-        borderLine.backgroundColor = borderColor
-        self.addSubview(borderLine)
-    }
-}
-
-extension UIViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-}
-
