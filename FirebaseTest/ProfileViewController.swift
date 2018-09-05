@@ -21,7 +21,7 @@ class ProfileViewController: UIViewController{
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        profileScrollView.contentSize = CGSize(width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT + 100)
+        profileScrollView.contentSize = CGSize(width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT + 200)
         profileScrollView.bounces = (profileScrollView.contentOffset.y > 100);
         createProfileView()
         self.createNavigationBar(withIdentifier: "profile")
@@ -110,18 +110,43 @@ class ProfileViewController: UIViewController{
         
         
         let inviteFriendsImage = UIImage(named: "add_friend")
-        let inviteFriendsButton = UIButton(frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 - 80, width: 30, height: 30))
+        let inviteFriendsButton = UIButton(frame: CGRect(x: 30, y: UIViewController.SCRN_HEIGHT*0.5 - 10, width: 40, height: 40))
         inviteFriendsButton.setImage(inviteFriendsImage, for: UIControlState.normal)
         //inviteFriendsButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
         
+        let inviteFriendsLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Add Friends", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+
+        
+        let favoritesImage = UIImage(named: "favorites")
+        let favoritesButton = UIButton(frame: CGRect(x: (UIViewController.SCRN_WIDTH - 220)/3 + 70, y: UIViewController.SCRN_HEIGHT*0.5 - 10, width: 40, height: 40))
+        favoritesButton.setImage(favoritesImage, for: UIControlState.normal)
+        //inviteFriendsButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
+        
+        let favoritesLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Favorites", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: (UIViewController.SCRN_WIDTH - 220)/3 + 60, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+        
+        let historyImage = UIImage(named: "history")
+        let historyButton = UIButton(frame: CGRect(x: 2*(UIViewController.SCRN_WIDTH - 220)/3 + 110, y: UIViewController.SCRN_HEIGHT*0.5 - 10, width: 40, height: 40))
+        historyButton.setImage(historyImage, for: UIControlState.normal)
+        //inviteFriendsButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
+        
+        let historyLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "History", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 2*(UIViewController.SCRN_WIDTH - 220)/3 + 100, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+        
+        
+        let openTableImage = UIImage(named: "open_table")
+        let openTableButton = UIButton(frame: CGRect(x: 3*(UIViewController.SCRN_WIDTH - 220)/3 + 150, y: UIViewController.SCRN_HEIGHT*0.5 - 10, width: 40, height: 40))
+        openTableButton.setImage(openTableImage, for: UIControlState.normal)
+        //inviteFriendsButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
+        
+        let openTableLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Open Table", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 3*(UIViewController.SCRN_WIDTH - 220)/3 + 140, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+        
         
         let addRecommendationsImage = UIImage(named: "add")
-        let addRecommendationsButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 40, y: UIViewController.SCRN_HEIGHT*0.5, width: 20, height: 20))
+        let addRecommendationsButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 40, y: UIViewController.SCRN_HEIGHT*0.5 + 80, width: 20, height: 20))
         addRecommendationsButton.setImage(addRecommendationsImage, for: UIControlState.normal)
         //self.view.addSubview(addRecommendationsButton)
         
         let addRecentImage = UIImage(named: "add")
-        let addRecentButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 40, y: UIViewController.SCRN_HEIGHT*0.5 + 300, width: 20, height: 20))
+        let addRecentButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 40, y: UIViewController.SCRN_HEIGHT*0.5 + 380, width: 20, height: 20))
         addRecentButton.setImage(addRecentImage, for: UIControlState.normal)
         //self.view.addSubview(addRecentButton)
         
@@ -132,7 +157,7 @@ class ProfileViewController: UIViewController{
                                                                fontName: UIViewController.SCRN_FONT_MEDIUM,
                                                                cornerRadius: 5,
                                                                frame: CGRect(x: 20,
-                                                                             y: UIViewController.SCRN_HEIGHT*0.5 + 40,
+                                                                             y: UIViewController.SCRN_HEIGHT*0.5 + 120,
                                                                              width: ((UIViewController.SCRN_WIDTH - 44) / 2),
                                                                              height: 240))
         
@@ -143,7 +168,7 @@ class ProfileViewController: UIViewController{
                                                                fontName: UIViewController.SCRN_FONT_MEDIUM,
                                                                cornerRadius: 5,
                                                                frame: CGRect(x: 26 + ((UIViewController.SCRN_WIDTH - 44) / 2),
-                                                                             y: UIViewController.SCRN_HEIGHT*0.5 + 40,
+                                                                             y: UIViewController.SCRN_HEIGHT*0.5 + 120,
                                                                              width: ((UIViewController.SCRN_WIDTH - 44) / 2),
                                                                              height: 117))
         
@@ -154,13 +179,13 @@ class ProfileViewController: UIViewController{
                                                                  fontName: UIViewController.SCRN_FONT_MEDIUM,
                                                                  cornerRadius: 5,
                                                                  frame: CGRect(x: 26 + ((UIViewController.SCRN_WIDTH - 44) / 2),
-                                                                               y: UIViewController.SCRN_HEIGHT*0.5 + 163,
+                                                                               y: UIViewController.SCRN_HEIGHT*0.5 + 243,
                                                                                width: ((UIViewController.SCRN_WIDTH - 44) / 2),
                                                                                height: 117))
         
         Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
-                let displayName = "Arow" //user.displayName!
+                let displayName = user.displayName!
                 let displayNameArr = displayName.components(separatedBy: " ")
                 let firstName = displayNameArr[0]
                 
@@ -170,7 +195,7 @@ class ProfileViewController: UIViewController{
                                                           fontSize: 20,
                                                           fontName: UIViewController.SCRN_FONT_BOLD,
                                                           cornerRadius: 0,
-                                                          frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5, width: UIViewController.SCRN_WIDTH - 20, height: 20))
+                                                          frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 + 80, width: UIViewController.SCRN_WIDTH - 20, height: 20))
                 welcomeNameLabel.textAlignment = .left
                 self.profileScrollView.addSubview(welcomeNameLabel)
                 
@@ -180,7 +205,7 @@ class ProfileViewController: UIViewController{
                                                           fontSize: 20,
                                                           fontName: UIViewController.SCRN_FONT_BOLD,
                                                           cornerRadius: 0,
-                                                          frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 + 300, width: UIViewController.SCRN_WIDTH - 20, height: 20))
+                                                          frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 + 380, width: UIViewController.SCRN_WIDTH - 20, height: 20))
                 recommendationsLabel.textAlignment = .left
                 self.profileScrollView.addSubview(recommendationsLabel)
             } else {
@@ -196,7 +221,13 @@ class ProfileViewController: UIViewController{
         profileScrollView.addSubview(addRecommendationsButton)
         profileScrollView.addSubview(addRecentButton)
         profileScrollView.addSubview(inviteFriendsButton)
-//        profileScrollView.addSubview(openTable)
+        profileScrollView.addSubview(inviteFriendsLabel)
+        profileScrollView.addSubview(favoritesButton)
+        profileScrollView.addSubview(favoritesLabel)
+        profileScrollView.addSubview(historyButton)
+        profileScrollView.addSubview(historyLabel)
+        profileScrollView.addSubview(openTableButton)
+        profileScrollView.addSubview(openTableLabel)
         profileScrollView.addSubview(profilePicturesPlaceholderOne)
         profileScrollView.addSubview(profilePicturesPlaceholderTwo)
         profileScrollView.addSubview(profilePicturesPlaceholderThree)

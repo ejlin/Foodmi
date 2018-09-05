@@ -9,9 +9,11 @@
 import UIKit
 import FirebaseAuth
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
 
+    private var tempView: UIView!
     private var reauthenticateView: UIView!
+    private var tempBackgroundLabel: UILabel!
 
     @IBOutlet weak var settingsScrollView: UIScrollView!
     
@@ -19,7 +21,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         reauthenticateView?.isHidden = true
-        settingsScrollView.contentSize = CGSize(width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT - 82)
+        settingsScrollView.contentSize = CGSize(width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT - 32)
         settingsScrollView.bounces = (settingsScrollView.contentOffset.y > 100);
         createSettingsPage()
         
@@ -67,7 +69,7 @@ class SettingsViewController: UIViewController {
 //                                             cornerRadius: 0,
 //                                             frame: CGRect(x: 0, y: 0, width: UIViewController.SCRN_WIDTH , height: 35))
         
-        for i in 0...11{
+        for i in 0...12{
             let border = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT, textColor: .clear, labelText: "", fontSize: 0, fontName: UIViewController.SCRN_FONT_MEDIUM, cornerRadius: 0, frame: CGRect(x: 0, y: i * 50, width: Int(UIViewController.SCRN_WIDTH), height: 1))
             self.settingsScrollView.addSubview(border)
         }
@@ -192,6 +194,17 @@ class SettingsViewController: UIViewController {
                                               tag: -1,
                                               frame: CGRect(x: 20, y: 460, width: UIViewController.SCRN_WIDTH - 40, height: 30))
         
+        let reportBugButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
+                                                titleText: "Report a Bug",
+                                                fontName: UIViewController.SCRN_FONT_BOLD,
+                                                fontSize: 16,
+                                                alignment: .left,
+                                                backgroundColor: .clear,
+                                                cornerRadius: 5,
+                                                tag: -1,
+                                                frame: CGRect(x: 20, y: 510, width: UIViewController.SCRN_WIDTH - 40, height: 30))
+        reportBugButton.addTarget(self, action: #selector(openReportBug), for: .touchUpInside)
+        
         let signOutButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
                                                 titleText: "Sign Out",
                                                 fontName: UIViewController.SCRN_FONT_BOLD,
@@ -200,7 +213,7 @@ class SettingsViewController: UIViewController {
                                                 backgroundColor: .clear,
                                                 cornerRadius: 5,
                                                 tag: -1,
-                                                frame: CGRect(x: 20, y: 510, width: UIViewController.SCRN_WIDTH - 40, height: 30))
+                                                frame: CGRect(x: 20, y: 560, width: UIViewController.SCRN_WIDTH - 40, height: 30))
         signOutButton.addTarget(self, action: #selector(self.signOutUser), for: .touchUpInside)
         
         let borderLabel = createUILabel(backgroundColor: UIViewController.SCRN_MAIN_COLOR,
@@ -209,16 +222,13 @@ class SettingsViewController: UIViewController {
                                         fontSize: 12,
                                         fontName: UIViewController.SCRN_FONT_BOLD,
                                         cornerRadius: 0,
-                                        frame: CGRect(x: 0, y: 550, width: UIViewController.SCRN_WIDTH, height: 35))
+                                        frame: CGRect(x: 0, y: 600, width: UIViewController.SCRN_WIDTH, height: 35))
         
         self.view.addSubview(backButton)
-//        self.settingsScrollView.addSubview(preferencesLabel)
-//        self.settingsScrollView.addSubview(accountLabel)
         self.settingsScrollView.addSubview(twentyOneLabel)
         self.settingsScrollView.addSubview(twentyOneSwitch)
         self.settingsScrollView.addSubview(creditCardButton)
         self.settingsScrollView.addSubview(notificationsButton)
-
         self.settingsScrollView.addSubview(changeFirstNameTextField)
         self.settingsScrollView.addSubview(saveFirstNameButton)
         self.settingsScrollView.addSubview(changeLastNameTextField)
@@ -227,12 +237,30 @@ class SettingsViewController: UIViewController {
         self.settingsScrollView.addSubview(saveEmailButton)
         self.settingsScrollView.addSubview(changePasswordTextField)
         self.settingsScrollView.addSubview(savePasswordButton)
-//        self.settingsScrollView.addSubview(generalLabel)
         self.settingsScrollView.addSubview(termsButton)
         self.settingsScrollView.addSubview(FAQButton)
+        self.settingsScrollView.addSubview(reportBugButton)
         self.settingsScrollView.addSubview(aboutButton)
         self.settingsScrollView.addSubview(signOutButton)
         self.settingsScrollView.addSubview(borderLabel)
+        
+        let customViewFrame = CGRect(x: 5,
+                                     y:UIViewController.SCRN_HEIGHT + 40,
+                                     width: UIViewController.SCRN_WIDTH - 10,
+                                     height: UIViewController.SCRN_HEIGHT + 200)
+        tempView = UIView(frame: customViewFrame)
+        tempView.backgroundColor = UIViewController.SCRN_WHITE
+        tempView.layer.cornerRadius = 8
+        tempView.layer.masksToBounds = true
+        tempBackgroundLabel = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY,
+                                                       textColor: .clear,
+                                                       labelText: "",
+                                                       fontSize: 0,
+                                                       fontName: UIViewController.SCRN_FONT_MEDIUM,
+                                                       cornerRadius: 3,
+                                                       frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 20, y: UIViewController.SCRN_HEIGHT, width: 40, height: 5))
+        view.addSubview(tempView)
+        self.view.addSubview(tempBackgroundLabel)
     }
 
     /* Function Name: hideReAuthenticatePopup()
@@ -438,6 +466,13 @@ class SettingsViewController: UIViewController {
         reauthenticateView.addSubview(reauthenticateLabel)
         reauthenticateView.addSubview(reenterPasswordTextField)
         reauthenticateView.addSubview(saveButton)
+        
+        
+        
+        
+        
+        
+        
     }
     
     @objc func reauthenticateAndChangeValue(sender: AuthenticateRequiredUIButton) {
@@ -506,11 +541,6 @@ class SettingsViewController: UIViewController {
                 guard let next = parent else { break }
                 candidate = next
             }
-            
-
-            
-            //let newPageViewController = MainPageController()
-            //self.present(newPageViewController, animated: false, completion: nil)
             break
         case 5:
             let cur = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: UIViewController.RESTAURANT_INFO_VC)
@@ -520,6 +550,72 @@ class SettingsViewController: UIViewController {
             break
         }
     }
+    
+    @objc func openReportBug(sender: UIButton!) {
+        
+        let coverView = UIView(frame: CGRect(x: 0, y: 0, width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT))
+        coverView.backgroundColor = UIViewController.SCRN_GREY_LIGHT_LIGHT
+        
+        tempView.addSubview(coverView)
+    
+        let titleLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_BLACK, labelText: "Report a Bug", fontSize: 24, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 30, y: 40, width: UIViewController.SCRN_WIDTH - 60, height: 30))
+        titleLabel.textAlignment = .left
+        tempView.addSubview(titleLabel)
+        
+        let descriptionLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Please describe the bug as accurately as possible with any steps taken that led to the bug!", fontSize: 16, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 30, y: 80, width: UIViewController.SCRN_WIDTH - 60, height: 60))
+        descriptionLabel.textAlignment = .left
+        tempView.addSubview(descriptionLabel)
+        
+//        let responseField = UITextField(frame: CGRect(x: 30, y: 115, width: UIViewController.SCRN_WIDTH - 60, height: 200))
+//        responseField.placeholder = "Description"
+//        responseField.textAlignment = .left
+//        responseField.textColor = UIViewController.SCRN_BLACK
+//        responseField.layer.borderColor = UIViewController.SCRN_BLACK.cgColor
+//        responseField.layer.borderWidth = 1.0
+//        tempView.addSubview(responseField)
+        
+        UIView.animate(withDuration: 0.30, delay: 0.0, options: .curveEaseOut, animations: {
+            self.view.bringSubview(toFront: self.tempView)
+            self.tempView.frame = CGRect(x: 0, y: 50, width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT + 200)
+            self.tempBackgroundLabel.frame = CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 20, y: 40, width: 40, height: 5)
+        }, completion: { finished in
+        })
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeDown.direction = UISwipeGestureRecognizerDirection.down
+        tempView.addGestureRecognizer(swipeDown)
+        
+    }
+    
+    
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.right:
+                print("Swiped right")
+            case UISwipeGestureRecognizerDirection.down:
+                UIView.animate(withDuration: 0.35, delay: 0.1, options: .curveEaseOut, animations: {
+                    self.tempView.frame = CGRect(x: 0, y:UIViewController.SCRN_HEIGHT, width: UIViewController.SCRN_WIDTH - 10, height: UIViewController.SCRN_HEIGHT - 90)
+                    self.tempBackgroundLabel.frame = CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 20, y: UIViewController.SCRN_HEIGHT, width: 40, height: 5)
+                }, completion: { finished in
+                })
+            case UISwipeGestureRecognizerDirection.left:
+                print("Swiped left")
+            case UISwipeGestureRecognizerDirection.up:
+                print("Swiped up")
+            default:
+                break
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
     /*
     // MARK: - Navigation
 

@@ -16,11 +16,8 @@ import MaterialComponents.MaterialActivityIndicator
 
 class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate{
 
-//    var placesClient: GMSPlacesClient!
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.hideKeyboardWhenTappedAround()
     }
 }
 
@@ -98,18 +95,6 @@ extension UITextField {
     }
 }
 
-extension UIViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-}
-
 extension UIView {
 
     struct Holder {
@@ -170,6 +155,28 @@ extension UIViewController{
     static let SETTINGS_VC = "settingsViewController"
     static let RESTAURANT_INFO_VC = "restaurantInfoViewController"
     static let PROFILE_VC = "profileViewController"
+    static let FEED_VC = "feedViewController"
+    static let NOTIFICATION_VC = "notificationViewController"
+    
+    override open func becomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override open func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            //Find out a way to display an error reporting page
+        }
+    }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
     
     /* Function Name: createUILabel()
      * Return Type: None
@@ -259,46 +266,78 @@ extension UIViewController{
 
     func isValidEmail(testStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: testStr)
     }
     
+    /* Function Name: createNavigationBar()
+     * Return Type: None
+     * Parameters: This function takes in 1 parameters
+     *             identifier: String - This will identify which view called this page and color in the tab in the navigation bar accordingly.
+     * Description: This function will create a navigation bar at the bottom of our page for every View Controller.
+     */
+    
     func createNavigationBar(withIdentifier identifier: String) {
         
-        let navigationBarLabelBorder = UILabel(frame: CGRect(x: 0, y: UIViewController.SCRN_HEIGHT - 50, width: UIViewController.SCRN_WIDTH, height: 1))
+        let GRAPHIC_SIZE = CGFloat(30)
+        let navigationBarLabelBorder = UILabel(frame: CGRect(x: 0,
+                                                             y: UIViewController.SCRN_HEIGHT - 50,
+                                                             width: UIViewController.SCRN_WIDTH,
+                                                             height: 1))
         navigationBarLabelBorder.backgroundColor = UIViewController.SCRN_GREY_LIGHT
         
-        let navigationBarLabel = UILabel(frame: CGRect(x: 0, y: UIViewController.SCRN_HEIGHT - 49, width: UIViewController.SCRN_WIDTH, height: 49))
+        let navigationBarLabel = UILabel(frame: CGRect(x: 0,
+                                                       y: UIViewController.SCRN_HEIGHT - 49,
+                                                       width: UIViewController.SCRN_WIDTH,
+                                                       height: 49))
         navigationBarLabel.backgroundColor = UIViewController.SCRN_WHITE
         
         let navigationBarHome = UIImage(named: "home_grey")
-        let navigationBarHomeButton = UIButton(frame: CGRect(x: (UIViewController.SCRN_WIDTH - 160) / 5, y: UIViewController.SCRN_HEIGHT - 40, width: 30, height: 30))
+        let navigationBarHomeButton = UIButton(frame: CGRect(x: 20,
+                                                             y: UIViewController.SCRN_HEIGHT - 40,
+                                                             width: GRAPHIC_SIZE,
+                                                             height: GRAPHIC_SIZE))
         navigationBarHomeButton.setImage(navigationBarHome, for: UIControlState.normal)
         navigationBarHomeButton.tag = 1
         navigationBarHomeButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
         
-        
-        let navigationBarProfile = UIImage(named: "profile_bar_grey")
-        let navigationBarProfileButton = UIButton(frame: CGRect(x: 3*(UIViewController.SCRN_WIDTH - 160) / 5 + 2*(UIViewController.SCRN_WIDTH - 160)/5, y: UIViewController.SCRN_HEIGHT - 40, width: 30, height: 30))
-        navigationBarProfileButton.setImage(navigationBarProfile, for: UIControlState.normal)
-        navigationBarProfileButton.tag = 2
-        navigationBarProfileButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
-        
-        
         let navigationBarFeed = UIImage(named: "feed_grey")
-        let navigationBarFeedButton = UIButton(frame: CGRect(x: 2*(UIViewController.SCRN_WIDTH - 160) / 5 + (UIViewController.SCRN_WIDTH - 160)/5, y: UIViewController.SCRN_HEIGHT - 40, width: 30, height: 30))
+        let navigationBarFeedButton = UIButton(frame: CGRect(x: (UIViewController.SCRN_WIDTH - 190)/4 + 50,
+                                                             y: UIViewController.SCRN_HEIGHT - 40,
+                                                             width: GRAPHIC_SIZE,
+                                                             height: GRAPHIC_SIZE))
         navigationBarFeedButton.setImage(navigationBarFeed, for: UIControlState.normal)
-        navigationBarFeedButton.tag = 3
+        navigationBarFeedButton.tag = 2
         navigationBarFeedButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
         
         
-        let navigationBarSettings = UIImage(named: "settings_grey")
-        let navigationBarSettingsButton = UIButton(frame: CGRect(x: 4*(UIViewController.SCRN_WIDTH - 160) / 5 + 3*(UIViewController.SCRN_WIDTH - 160)/5, y: UIViewController.SCRN_HEIGHT - 40, width: 30, height: 30))
-        navigationBarSettingsButton.setImage(navigationBarSettings, for: UIControlState.normal)
-        navigationBarSettingsButton.tag = 4
-        navigationBarSettingsButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
+        let navigationBarProfile = UIImage(named: "profile_bar_grey")
+        let navigationBarProfileButton = UIButton(frame: CGRect(x: 2*(UIViewController.SCRN_WIDTH - 190)/4 + 80,
+                                                                y: UIViewController.SCRN_HEIGHT - 40,
+                                                                width: GRAPHIC_SIZE,
+                                                                height: GRAPHIC_SIZE))
+        navigationBarProfileButton.setImage(navigationBarProfile, for: UIControlState.normal)
+        navigationBarProfileButton.tag = 3
+        navigationBarProfileButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
         
+        let navigationBarNotification = UIImage(named: "notification_grey")
+        let navigationBarNotificationButton = UIButton(frame: CGRect(x: 3*(UIViewController.SCRN_WIDTH - 190)/4 + 110,
+                                                             y: UIViewController.SCRN_HEIGHT - 40,
+                                                             width: GRAPHIC_SIZE,
+                                                             height: GRAPHIC_SIZE))
+        navigationBarNotificationButton.setImage(navigationBarNotification, for: UIControlState.normal)
+        navigationBarNotificationButton.tag = 4
+        navigationBarNotificationButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
+        
+        
+        let navigationBarSettings = UIImage(named: "settings_grey")
+        let navigationBarSettingsButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50,
+                                                                 y: UIViewController.SCRN_HEIGHT - 40,
+                                                                 width: GRAPHIC_SIZE,
+                                                                 height: GRAPHIC_SIZE))
+        navigationBarSettingsButton.setImage(navigationBarSettings, for: UIControlState.normal)
+        navigationBarSettingsButton.tag = 5
+        navigationBarSettingsButton.addTarget(self, action: #selector(self.navigatePages), for: .touchUpInside)
         
         switch identifier {
             case "main_page":
@@ -310,6 +349,9 @@ extension UIViewController{
             case "profile":
                 navigationBarProfileButton.setImage(UIImage(named: "profile_bar_red"), for: UIControlState.normal)
                 break;
+            case "notification":
+                navigationBarNotificationButton.setImage(UIImage(named: "notification_red"), for: UIControlState.normal)
+                break;
             case "settings":
                 navigationBarSettingsButton.setImage(UIImage(named: "settings_red"), for: UIControlState.normal)
                 break;
@@ -320,14 +362,23 @@ extension UIViewController{
         self.view.addSubview((navigationBarLabelBorder))
         self.view.addSubview(navigationBarLabel)
         self.view.addSubview(navigationBarHomeButton)
-        self.view.addSubview(navigationBarFeedButton)
         self.view.addSubview(navigationBarProfileButton)
+        self.view.addSubview(navigationBarFeedButton)
+        self.view.addSubview(navigationBarNotificationButton)
         self.view.addSubview(navigationBarSettingsButton)
         
     }
     
+    /* Function Name: navigatePages()
+     * Return Type: None
+     * Parameters: This function takes in 1 parameters
+     *             sender: UIButton - This is the button that was pressed to call this function
+     * Description: This function will decide which page to navigate to for the navigation bar at the bottom of the application.
+     */
+    
     @objc func navigatePages(sender: UIButton) {
         
+        /* Declare our variables to set according to which page we wish to switch to */
         var identifier: String?
         var direction: UIPageViewControllerNavigationDirection?
         var idx: Int?
@@ -336,27 +387,32 @@ extension UIViewController{
             case 1:
                 identifier = UIViewController.MAIN_PAGE_VC
                 direction = .forward
-                idx = 1
-                break;
-            case 2:
-                identifier = UIViewController.PROFILE_VC
-                direction = .forward
                 idx = 0
                 break;
-            case 3:
-                identifier = UIViewController.MAIN_PAGE_VC
+            case 2:
+                identifier = UIViewController.FEED_VC
                 direction = .forward
                 idx = 1
                 break;
-            case 4:
-                identifier = UIViewController.SETTINGS_VC
+            case 3:
+                identifier = UIViewController.PROFILE_VC
                 direction = .forward
                 idx = 2
+                break;
+            case 4:
+                identifier = UIViewController.NOTIFICATION_VC
+                direction = .forward
+                idx = 3
+                break;
+            case 5:
+                identifier = UIViewController.SETTINGS_VC
+                direction = .forward
+                idx = 4
                 break;
             default:
                 identifier = UIViewController.MAIN_PAGE_VC
                 direction = .forward
-                idx = 1
+                idx = 0
                 break;
         }
         

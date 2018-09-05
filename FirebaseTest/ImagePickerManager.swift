@@ -13,7 +13,7 @@ import UIKit
 class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var picker = UIImagePickerController();
-    var alert = UIAlertController(title: "Edit Profile Picture", message: nil, preferredStyle: .actionSheet)
+    var alert = UIAlertController(title: "Edit Photo", message: nil, preferredStyle: .actionSheet)
     var viewController: UIViewController?
     var pickImageCallback : ((UIImage) -> ())?;
     

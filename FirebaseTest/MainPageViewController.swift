@@ -20,7 +20,7 @@ class MainPageViewController: UIViewController,  CLLocationManagerDelegate, UISc
 
     private var restaurantView: UIView!
     private var restaurantBackgroundLabel: UILabel!
-    private var priceSymbol = ["", "$", "$$", "$$$", "$$$$", "$$$$$"]
+    private var priceSymbol = ["$", "$", "$$", "$$$", "$$$$", "$$$$$"]
     
     let locationManager = CLLocationManager()
 
@@ -81,32 +81,34 @@ class MainPageViewController: UIViewController,  CLLocationManagerDelegate, UISc
      */
     func createMainPageView() {
 
-        let coverView = UIView(frame: CGRect(x: 0, y: 150, width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT - 150))
+        let coverView = UIView(frame: CGRect(x: 0,
+                                             y: 150,
+                                             width: UIViewController.SCRN_WIDTH,
+                                             height: UIViewController.SCRN_HEIGHT - 150))
         coverView.backgroundColor = UIViewController.SCRN_WHITE
         
-        let activityIndicator = MDCActivityIndicator(frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 25, y: UIViewController.SCRN_HEIGHT*0.5 - 100, width: 50, height: 50))
+        let activityIndicator = MDCActivityIndicator(frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 25,
+                                                                   y: UIViewController.SCRN_HEIGHT*0.5 - 100,
+                                                                   width: 50,
+                                                                   height: 50))
         activityIndicator.sizeToFit()
-        coverView.addSubview(activityIndicator)
         activityIndicator.cycleColors = [UIViewController.SCRN_MAIN_COLOR]
         activityIndicator.startAnimating()
+        coverView.addSubview(activityIndicator)
+        
+        let welcomeNameLabel = self.createUILabel(backgroundColor: .clear,
+                                                  textColor: UIViewController.SCRN_BLACK,
+                                                  labelText: "Browse",
+                                                  fontSize: 30,
+                                                  fontName: UIViewController.SCRN_FONT_BOLD,
+                                                  cornerRadius: 0,
+                                                  frame: CGRect(x: 20, y: 70, width: 200, height: 24))
+        welcomeNameLabel.textAlignment = .left
         
         Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let user = user {
-                let displayName = "Arow" //user.displayName!
-                let displayNameArr = displayName.components(separatedBy: " ")
-                let firstName = displayNameArr[0]
-                
-                let welcomeNameLabel = self.createUILabel(backgroundColor: .clear,
-                                       textColor: UIViewController.SCRN_BLACK,
-                                       labelText: "Welcome " + firstName +  ",",
-                                       fontSize: 24,
-                                       fontName: UIViewController.SCRN_FONT_BOLD,
-                                       cornerRadius: 0,
-                                       frame: CGRect(x: 20, y: 70, width: 200, height: 24))
-                welcomeNameLabel.textAlignment = .left
-                
-                let profileImage = UIImage(named: "notification")
-                let settingsButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 65, y: 60, width: 35, height: 35))
+            if user != nil {
+                let profileImage = UIImage(named: "open_table")
+                let settingsButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 75, y: 50, width: 50, height: 50))
                 settingsButton.setImage(profileImage, for: UIControlState.normal)
                 settingsButton.tag = 1
                 //settingsButton.addTarget(self, action:#selector(self.buttonPressed), for:.touchUpInside)
@@ -310,8 +312,6 @@ class MainPageViewController: UIViewController,  CLLocationManagerDelegate, UISc
         restaurantView.addSubview(restaurantScrollView)
         self.view.addSubview(restaurantBackgroundLabel)
         self.view.addSubview(coverView)
-        
-
     }
     
     @objc func displayRestaurant(sender: RestaurantUIButton!) {
@@ -529,23 +529,21 @@ class MainPageViewController: UIViewController,  CLLocationManagerDelegate, UISc
 
     }
     
-    
-
-    func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-        if gesture.direction == UISwipeGestureRecognizerDirection.right {
-            //
-            print("Swipe Right")
-        }
-        else if gesture.direction == UISwipeGestureRecognizerDirection.left {
-            print("Swipe Left")
-        }
-        else if gesture.direction == UISwipeGestureRecognizerDirection.up {
-            print("Swipe Up")
-        }
-        else if gesture.direction == UISwipeGestureRecognizerDirection.down {
-            print("Swipe Down")
-        }
-    }
+//    func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+//        if gesture.direction == UISwipeGestureRecognizerDirection.right {
+//            //
+//            print("Swipe Right")
+//        }
+//        else if gesture.direction == UISwipeGestureRecognizerDirection.left {
+//            print("Swipe Left")
+//        }
+//        else if gesture.direction == UISwipeGestureRecognizerDirection.up {
+//            print("Swipe Up")
+//        }
+//        else if gesture.direction == UISwipeGestureRecognizerDirection.down {
+//            print("Swipe Down")
+//        }
+//    }
     
     @objc func openMaps(sender: MapUIButton) {
         let placeLatitude = (sender.latitude! as NSString).doubleValue

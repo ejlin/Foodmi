@@ -30,7 +30,9 @@ class MainPageController: UIPageViewController, UIScrollViewDelegate
     fileprivate lazy var pages: [UIViewController] = {
         return [
             self.getViewController(withIdentifier: UIViewController.MAIN_PAGE_VC),
+            self.getViewController(withIdentifier: UIViewController.FEED_VC),
             self.getViewController(withIdentifier: UIViewController.PROFILE_VC),
+            self.getViewController(withIdentifier: UIViewController.NOTIFICATION_VC),
             self.getViewController(withIdentifier: UIViewController.SETTINGS_VC)
         ]
     }()

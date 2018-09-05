@@ -213,6 +213,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         /* Return from this function if an error occurred at any point. */
         if (errorOccurred){
+            
             return
         }
         
@@ -228,6 +229,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         sender.email?.text = ""
                         sender.email?.attributedPlaceholder = NSAttributedString(string: "Email already exists",
                                                                                  attributes: [NSAttributedStringKey.foregroundColor : UIViewController.SCRN_INVALID_INPUT_RED])
+                        self.view.hideActivityIndicator()
+                        return
                     case .weakPassword:
                         sender.password?.text = ""
                         sender.confirmPassword?.text = ""
@@ -235,6 +238,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                                                                                     attributes: [NSAttributedStringKey.foregroundColor: UIViewController.SCRN_INVALID_INPUT_RED])
                         sender.confirmPassword?.attributedPlaceholder = NSAttributedString(string: "Weak Password",
                                                                                            attributes: [NSAttributedStringKey.foregroundColor : UIViewController.SCRN_INVALID_INPUT_RED])
+                        self.view.hideActivityIndicator()
+                        return
                     default:
                         return
                     }
@@ -242,19 +247,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             /* Update our user's display name in Firebase */
-            //let user = Auth.auth().currentUser
+            let user = Auth.auth().currentUser
             let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
             changeRequest?.displayName = firstName! + " " + lastName!
             changeRequest?.commitChanges { (error) in
-                //let ref = Database.database().reference()
+                let ref = Database.database().reference()
                 //print((user?.uid)!)
-                print(email!)
-                //self.ref.child("users_id").setValue([user?.uid])
+                ref.child("users/\((user?.uid)!)/email").setValue(["email" : email!])
+                ref.child("users/\((user?.uid)!)/name").setValue(["name" : firstName! + " " + lastName!])
                 //ref.child("usersID/\((user?.uid)!)").setValue(["email": email!])
-                if (error == nil){
-                    let newPageViewController = MainPageController()
-                    self.present(newPageViewController, animated: false, completion: nil)
-                }
+                let newPageViewController = MainPageController()
+                self.present(newPageViewController, animated: false, completion: nil)
             }
             ///ref.child("usersEmail/\(email!)").setValue(["uid": (user?.uid)!])
             
@@ -269,7 +272,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.show(cur, sender: self)
     }
     
-
     /*
     // MARK: - Navigation
 

@@ -94,7 +94,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kuV-3p-Pyf">
-                                <rect key="frame" x="0.0" y="102" width="375" height="520"/>
+                                <rect key="frame" x="0.0" y="102" width="375" height="517"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </scrollView>
                         </subviews>
@@ -108,6 +108,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZkL-zR-QJe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5096.8000000000002" y="-433.13343328335833"/>
+        </scene>
+        <!--Notification View Controller-->
+        <scene sceneID="ywR-YP-IPV">
+            <objects>
+                <viewController storyboardIdentifier="notificationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XDN-p6-dD9" customClass="NotificationViewController" customModule="FirebaseTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZUv-h5-EdF" customClass="notificationViewControll">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2k-Tq-H9g">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="AlR-uf-Nyw"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DYb-RX-WPw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5848.8000000000002" y="-433.13343328335833"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="PWs-PP-NeD">
@@ -224,6 +245,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EEC-fE-MhJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4365.6000000000004" y="267.61619190404798"/>
+        </scene>
+        <!--Feed View Controller-->
+        <scene sceneID="atO-v6-ce7">
+            <objects>
+                <viewController storyboardIdentifier="feedViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HeJ-22-oCB" customClass="FeedViewController" customModule="FirebaseTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pdk-xu-TLs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yig-e2-Yz0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="eo3-hG-g9h"/>
+                    </view>
+                    <connections>
+                        <outlet property="feedScrollView" destination="Yig-e2-Yz0" id="gcx-5p-fy1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g6o-tl-zAG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5096.8000000000002" y="267.61619190404798"/>
         </scene>
     </scenes>
 </document>

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0927A26B213E191F008E49BF /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0927A26A213E191F008E49BF /* FeedViewController.swift */; };
+		0927A26D21409166008E49BF /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0927A26C21409166008E49BF /* NotificationViewController.swift */; };
+		0927A26F21409A30008E49BF /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0927A26E21409A30008E49BF /* AddFriendViewController.swift */; };
 		094A0D412134FAC6000C45C0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D402134FAC6000C45C0 /* SettingsViewController.swift */; };
 		094A0D432134FEF7000C45C0 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D422134FEF7000C45C0 /* WelcomeViewController.swift */; };
 		094A0D452134FFE8000C45C0 /* GetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A0D442134FFE8000C45C0 /* GetStartedViewController.swift */; };
@@ -29,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0927A26A213E191F008E49BF /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		0927A26C21409166008E49BF /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		0927A26E21409A30008E49BF /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		094A0D402134FAC6000C45C0 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		094A0D422134FEF7000C45C0 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		094A0D442134FFE8000C45C0 /* GetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +97,7 @@
 				09CDC8E921269B82001E91BB /* AppDelegate.swift */,
 				09CDC8EB21269B82001E91BB /* ViewController.swift */,
 				094A0D4A2135013C000C45C0 /* SignUpViewController.swift */,
+				0927A26E21409A30008E49BF /* AddFriendViewController.swift */,
 				094A0D48213500EE000C45C0 /* LoginViewController.swift */,
 				094A0D4621350062000C45C0 /* RegisterViewController.swift */,
 				094A0D442134FFE8000C45C0 /* GetStartedViewController.swift */,
@@ -98,6 +105,8 @@
 				094A0D402134FAC6000C45C0 /* SettingsViewController.swift */,
 				09900FAC212C8E530051432D /* KeyboardLayoutConstraint.swift */,
 				09CDC8ED21269B82001E91BB /* Main.storyboard */,
+				0927A26C21409166008E49BF /* NotificationViewController.swift */,
+				0927A26A213E191F008E49BF /* FeedViewController.swift */,
 				09CEBA892139D6F800AD3F62 /* ProfileViewController.swift */,
 				09CEBA8B213B5AB500AD3F62 /* ImagePickerManager.swift */,
 				09CDC8F021269B83001E91BB /* Assets.xcassets */,
@@ -281,16 +290,19 @@
 			files = (
 				094A0D49213500EE000C45C0 /* LoginViewController.swift in Sources */,
 				09CDC9062127704F001E91BB /* PageViewController.swift in Sources */,
+				0927A26D21409166008E49BF /* NotificationViewController.swift in Sources */,
 				09900FAD212C8E530051432D /* KeyboardLayoutConstraint.swift in Sources */,
 				09CEBA8A2139D6F800AD3F62 /* ProfileViewController.swift in Sources */,
 				09CEBA862138B63300AD3F62 /* MainPageViewController.swift in Sources */,
 				09CDC8EC21269B82001E91BB /* ViewController.swift in Sources */,
 				094A0D4B2135013C000C45C0 /* SignUpViewController.swift in Sources */,
+				0927A26B213E191F008E49BF /* FeedViewController.swift in Sources */,
 				094A0D4721350062000C45C0 /* RegisterViewController.swift in Sources */,
 				094A0D432134FEF7000C45C0 /* WelcomeViewController.swift in Sources */,
 				09CEBA8C213B5AB500AD3F62 /* ImagePickerManager.swift in Sources */,
 				094A0D412134FAC6000C45C0 /* SettingsViewController.swift in Sources */,
 				094A0D452134FFE8000C45C0 /* GetStartedViewController.swift in Sources */,
+				0927A26F21409A30008E49BF /* AddFriendViewController.swift in Sources */,
 				09CEBA882138B64200AD3F62 /* MainPageController.swift in Sources */,
 				09CDC8EA21269B82001E91BB /* AppDelegate.swift in Sources */,
 			);
