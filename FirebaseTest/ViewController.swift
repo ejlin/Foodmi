@@ -157,6 +157,7 @@ extension UIViewController{
     static let PROFILE_VC = "profileViewController"
     static let FEED_VC = "feedViewController"
     static let NOTIFICATION_VC = "notificationViewController"
+    static let ADD_FRIEND_VC = "addFriendViewController"
     
     override open func becomeFirstResponder() -> Bool {
         return true

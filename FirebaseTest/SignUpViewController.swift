@@ -252,17 +252,25 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             changeRequest?.displayName = firstName! + " " + lastName!
             changeRequest?.commitChanges { (error) in
                 let ref = Database.database().reference()
-                //print((user?.uid)!)
-                ref.child("users/\((user?.uid)!)/email").setValue(["email" : email!])
-                ref.child("users/\((user?.uid)!)/name").setValue(["name" : firstName! + " " + lastName!])
+
+                let newEmail = self.createNewEmail(oldEmail: email!)
+                
+                ref.child("users_id/\((user?.uid)!)/id").setValue(["id" : (user?.uid)!])
+                ref.child("users_id/\((user?.uid)!)/email").setValue(["email" : email!])
+                ref.child("users_id/\((user?.uid)!)/name").setValue(["name" : firstName! + " " + lastName!])
                 //ref.child("usersID/\((user?.uid)!)").setValue(["email": email!])
-                let newPageViewController = MainPageController()
-                self.present(newPageViewController, animated: false, completion: nil)
+                
             }
+            let newPageViewController = MainPageController()
+            self.present(newPageViewController, animated: false, completion: nil)
             ///ref.child("usersEmail/\(email!)").setValue(["uid": (user?.uid)!])
             
         }
         return
+    }
+    
+    func createNewEmail(oldEmail: String) -> String{
+        return oldEmail.components(separatedBy: ".").joined(separator: "•")
     }
     
     @objc func backButtonPressed(sender:UIButton) {

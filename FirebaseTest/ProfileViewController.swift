@@ -1,4 +1,4 @@
-//
+    //
 //  ProfileViewController.swift
 //  FirebaseTest
 //
@@ -112,9 +112,9 @@ class ProfileViewController: UIViewController{
         let inviteFriendsImage = UIImage(named: "add_friend")
         let inviteFriendsButton = UIButton(frame: CGRect(x: 30, y: UIViewController.SCRN_HEIGHT*0.5 - 10, width: 40, height: 40))
         inviteFriendsButton.setImage(inviteFriendsImage, for: UIControlState.normal)
-        //inviteFriendsButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
+        inviteFriendsButton.addTarget(self, action:#selector(addFriend), for:.touchUpInside)
         
-        let inviteFriendsLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Add Friends", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+        let inviteFriendsLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Friends", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
 
         
         let favoritesImage = UIImage(named: "favorites")
@@ -292,6 +292,11 @@ class ProfileViewController: UIViewController{
         }
     }
 
+    
+    @objc func addFriend(sender: UIButton) {
+        let cur = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: UIViewController.ADD_FRIEND_VC)
+        self.present(cur, animated: true)
+    }
     /*
     // MARK: - Navigation
 
