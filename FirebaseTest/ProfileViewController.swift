@@ -7,6 +7,7 @@
 //
 
 import FirebaseAuth
+import FirebaseDatabase
 import FirebaseStorage
 import UIKit
 import AVKit
@@ -67,17 +68,18 @@ class ProfileViewController: UIViewController{
         let profileImageOverlay = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "", fontSize: 0, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 60, y: UIViewController.SCRN_HEIGHT*0.5 - 155, width: 120, height: 120))
         profileImageOverlay.layer.cornerRadius = 60
     
-        let user = Auth.auth().currentUser
-        if user != nil && user?.photoURL != nil{
-            //let data = try? Data(contentsOf: (user?.photoURL!)!)
-            profileButton.kf.setImage(with: user?.photoURL, for: UIControlState.normal)
-            //profileButton.setImage(UIImage(data: data!)?.circle, for: UIControlState.normal)
-            profileButton.layer.cornerRadius = min(profileButton.frame.height,profileButton.frame.width) / 2 //you can change the cornerRadius according to your need
-            profileButton.layer.borderColor = UIColor.white.cgColor
-            profileButton.layer.masksToBounds = true
+        DispatchQueue.main.async {
+            let user = Auth.auth().currentUser
+            if user != nil && user?.photoURL != nil{
+                //let data = try? Data(contentsOf: (user?.photoURL!)!)
+                profileButton.kf.setImage(with: user?.photoURL, for: UIControlState.normal)
+                //profileButton.setImage(UIImage(data: data!)?.circle, for: UIControlState.normal)
+                profileButton.layer.cornerRadius = min(profileButton.frame.height,profileButton.frame.width) / 2 //you can change the cornerRadius according to your need
+                profileButton.layer.borderColor = UIColor.white.cgColor
+                profileButton.layer.masksToBounds = true
+            }
         }
-        
-        
+                
         let showMoreImage = UIImage(named: "show_more_button")
         let showMoreButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 40, y: 40, width: 25, height: 25))
         showMoreButton.setImage(showMoreImage, for: UIControlState.normal)
@@ -85,36 +87,12 @@ class ProfileViewController: UIViewController{
         
         // self.view.addSubview(profileButton)
         
-//        let openTable = self.createUIButton(textColor: UIViewController.SCRN_WHITE,
-//                                            titleText: "Open a Table",
-//                                            fontName: UIViewController.SCRN_FONT_BOLD,
-//                                            fontSize: 15,
-//                                            alignment: .center,
-//                                            backgroundColor: UIViewController.SCRN_MAIN_COLOR,
-//                                            cornerRadius: 15,
-//                                            tag: -1,
-//                                            frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 + 70,
-//                                                          y: UIViewController.SCRN_HEIGHT*0.5 - 80,
-//                                                          width: 100,
-//                                                          height: 30))
-//
-//        let inviteFriends = self.createUIButton(textColor: UIViewController.SCRN_WHITE,
-//                                                titleText: "Invite Friends",
-//                                                fontName: UIViewController.SCRN_FONT_BOLD,
-//                                                fontSize: 15,
-//                                                alignment: .center,
-//                                                backgroundColor: UIViewController.SCRN_MAIN_COLOR,
-//                                                cornerRadius: 15,
-//                                                tag: -1,
-//                                                frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 - 80, width: 100, height: 30))
-        
-        
         let inviteFriendsImage = UIImage(named: "add_friend")
         let inviteFriendsButton = UIButton(frame: CGRect(x: 30, y: UIViewController.SCRN_HEIGHT*0.5 - 10, width: 40, height: 40))
         inviteFriendsButton.setImage(inviteFriendsImage, for: UIControlState.normal)
         inviteFriendsButton.addTarget(self, action:#selector(addFriend), for:.touchUpInside)
         
-        let inviteFriendsLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Friends", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+        let inviteFriendsLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_GREY, labelText: "Friends", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 20, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
 
         
         let favoritesImage = UIImage(named: "favorites")
@@ -122,22 +100,22 @@ class ProfileViewController: UIViewController{
         favoritesButton.setImage(favoritesImage, for: UIControlState.normal)
         //inviteFriendsButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
         
-        let favoritesLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Favorites", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: (UIViewController.SCRN_WIDTH - 220)/3 + 60, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+        let favoritesLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_GREY, labelText: "Favorites", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: (UIViewController.SCRN_WIDTH - 220)/3 + 60, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
         
         let historyImage = UIImage(named: "history")
         let historyButton = UIButton(frame: CGRect(x: 2*(UIViewController.SCRN_WIDTH - 220)/3 + 110, y: UIViewController.SCRN_HEIGHT*0.5 - 10, width: 40, height: 40))
         historyButton.setImage(historyImage, for: UIControlState.normal)
         //inviteFriendsButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
         
-        let historyLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "History", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 2*(UIViewController.SCRN_WIDTH - 220)/3 + 100, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+        let historyLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_GREY, labelText: "History", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 2*(UIViewController.SCRN_WIDTH - 220)/3 + 100, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
         
         
-        let openTableImage = UIImage(named: "open_table")
+        let openTableImage = UIImage(named: "open_table_grey")
         let openTableButton = UIButton(frame: CGRect(x: 3*(UIViewController.SCRN_WIDTH - 220)/3 + 150, y: UIViewController.SCRN_HEIGHT*0.5 - 10, width: 40, height: 40))
         openTableButton.setImage(openTableImage, for: UIControlState.normal)
         //inviteFriendsButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
         
-        let openTableLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_MAIN_COLOR, labelText: "Open Table", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 3*(UIViewController.SCRN_WIDTH - 220)/3 + 140, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
+        let openTableLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_GREY, labelText: "Open Table", fontSize: 11, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 3*(UIViewController.SCRN_WIDTH - 220)/3 + 140, y: UIViewController.SCRN_HEIGHT*0.5 + 35, width: 60, height: 12))
         
         
         let addRecommendationsImage = UIImage(named: "add")
@@ -243,46 +221,54 @@ class ProfileViewController: UIViewController{
                 sender.setImage(image, for: UIControlState.normal) // = image
                 sender.layer.opacity = 0.5
                 
-                DispatchQueue.main.async {
-                    let activityIndicator = MDCActivityIndicator(frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 12, y: UIViewController.SCRN_HEIGHT*0.5 - 110, width: 50, height: 50))
-                    activityIndicator.sizeToFit()
-                    activityIndicator.cycleColors = [UIViewController.SCRN_MAIN_COLOR]
-                    activityIndicator.startAnimating()
-                    self.profileScrollView.addSubview(activityIndicator)
+                let activityIndicator = MDCActivityIndicator(frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 12,
+                                                                           y: UIViewController.SCRN_HEIGHT*0.5 - 110,
+                                                                           width: 50,
+                                                                           height: 50))
+                activityIndicator.sizeToFit()
+                activityIndicator.cycleColors = [UIViewController.SCRN_MAIN_COLOR]
+                activityIndicator.startAnimating()
+                self.profileScrollView.addSubview(activityIndicator)
                     
-                    guard let uid = Auth.auth().currentUser?.uid else {return}
-                    let image = image.circle
-                guard let imageData = UIImagePNGRepresentation(image) else {return}
+                guard let uid = Auth.auth().currentUser?.uid else {return}
+                let newImage = image.circle
+                guard let imageData = UIImagePNGRepresentation(newImage) else {return}
                 let profileImageReference = Storage.storage().reference().child("profile_image_url").child("\(uid).png")
-                let uploadTask = profileImageReference.putData(imageData, metadata: nil) { (metadata, error) in
-                    if let error = error {
-                        print("here")
-                        print(error.localizedDescription)
-                    } else {
-                        profileImageReference.downloadURL {url, error in
-                            if let error = error {
-                                //Handle any errors
-                            } else {
-                                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                                    changeRequest?.photoURL = url
-                                    changeRequest?.commitChanges { (error) in
-                                        print("Worked")
-                                        sender.layer.opacity = 1
-                                        activityIndicator.stopAnimating()
-                                }
-                                // Get the download URL
-                            }
+               
+                DispatchQueue.main.async {
+                    let uploadTask = profileImageReference.putData(imageData, metadata: nil) { (metadata, error) in
+                        if let error = error {
+                            print("here")
+                            print(error.localizedDescription)
                         }
-                        //let downloadURL = metadata.downloadURL()?.absoluteString ?? ""
-                        // Here you get the download url of the profile picture.
                     }
+                    uploadTask.observe(.progress, handler: { (snapshot) in
+                        print(snapshot.progress?.fractionCompleted ?? "")
+                        // Here you can get the progress of the upload process.
+                    })
                 }
-                uploadTask.observe(.progress, handler: { (snapshot) in
-                    print(snapshot.progress?.fractionCompleted ?? "")
-                    // Here you can get the progress of the upload process.
-                })
+                DispatchQueue.main.async {
+                    profileImageReference.downloadURL {url, error in
+                        if error != nil {
+                            //Handle any errors
+                        } else {
+                            let user = Auth.auth().currentUser
+                            let changeRequest = user?.createProfileChangeRequest()
+                            changeRequest?.photoURL = url
+                            changeRequest?.commitChanges { (error) in
+                                let ref = Database.database().reference()
+                                ref.child("users_id/\((user?.uid)!)/profileURL").setValue(["profileURL" : "\(url!)"])
+                                print("Worked")
+                                sender.layer.opacity = 1
+                                activityIndicator.stopAnimating()
+                            }
+                            // Get the download URL
+                        }
+                    }
+                    //let downloadURL = metadata.downloadURL()?.absoluteString ?? ""
+                    // Here you get the download url of the profile picture.
+                }
             }
-        }
     }
     
     @objc func changeCoverPhoto(sender: UIButton) {

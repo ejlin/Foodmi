@@ -28,6 +28,11 @@ class AddFriendViewController: UIViewController {
     
 
     func createAddFriendView() {
+        
+        DispatchQueue.main.async {
+            self.establishConnection()
+        }
+        
         let friendSearchBar = UISearchBar(frame: CGRect(x: 20, y: 50, width: UIViewController.SCRN_WIDTH - 80, height: 40))
         friendSearchBar.placeholder = "Search for Friends"
         let textFieldInsideSearchBar = friendSearchBar.value(forKey: "searchField") as? UITextField
@@ -46,6 +51,14 @@ class AddFriendViewController: UIViewController {
         view.addSubview(closeButton)
     }
     
+    func establishConnection() {
+        let ref = Database.database().reference()
+        ref.child("users_id").queryOrdered(byChild: "name/name").queryStarting(atValue: "" , childKey: "name").queryEnding(atValue: "" + "\u{f8ff}", childKey: "name").observeSingleEvent(of: .value, with: { (snapshot) in
+        }) { (err) in
+            print(err)
+        }
+    }
+    
     @objc func searchFriends(textField: UITextField) {
         
         for subview in coverView.subviews {
@@ -53,8 +66,12 @@ class AddFriendViewController: UIViewController {
         }
         
         let searchEntry = textField.text!
-        print(searchEntry)
         if (searchEntry == ""){
+            
+            let nameLabel = self.createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_GREY, labelText: "No results", fontSize: 20, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 0, y: 200, width: Int(UIViewController.SCRN_WIDTH ), height: 45))
+            nameLabel.textAlignment = .center
+           
+            self.coverView.addSubview(nameLabel)
             return
         }
         
@@ -67,17 +84,42 @@ class AddFriendViewController: UIViewController {
             var count = 0
             if (result != nil) {
                 for (key, value) in result! {
-                    let valueResult = value as? [String: Any]
-                    let valueResultDict = valueResult!["name"]! as? NSDictionary
-                    print(valueResultDict!["name"]!)
                     
-                    let nameLabel = self.createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_BLACK, labelText: "\(valueResultDict!["name"]!)", fontSize: 18, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 30, y: 40*count, width: Int(UIViewController.SCRN_WIDTH - 60), height: 40))
-                    nameLabel.textAlignment = .left
-                    count = count + 1
-                    let nameLabelBorder = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT, textColor: .clear, labelText: "", fontSize: 0, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 20, y: 40*count, width: Int(UIViewController.SCRN_WIDTH - 40), height: 1))
-                    self.coverView.addSubview(nameLabel)
-                    self.coverView.addSubview(nameLabelBorder)
+                    var profileButton: UIButton?
+                    DispatchQueue.main.async {
+                        let valueResult = value as? [String: Any]
+                        let valueResultDict = valueResult!["name"]! as? NSDictionary
+                        
+                        let nameLabel = self.createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_BLACK, labelText: "\(valueResultDict!["name"]!)", fontSize: 20, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 75, y: 45*count, width: Int(UIViewController.SCRN_WIDTH - 80), height: 45))
+                        nameLabel.textAlignment = .left
+                        let profileImage = UIImage(named: "user")
+                        profileButton = UIButton(frame: CGRect(x: 30, y: 45*count + 5, width: 35, height: 35))
+                        profileButton?.setImage(profileImage, for: UIControlState.normal)
+                        count = count + 1
+
+                        let nameLabelBorder = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT, textColor: .clear, labelText: "", fontSize: 0, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 20, y: 45*count, width: Int(UIViewController.SCRN_WIDTH - 40), height: 1))
+                    
+                        self.coverView.addSubview(nameLabel)
+                        self.coverView.addSubview(profileButton!)
+                        self.coverView.addSubview(nameLabelBorder)
+                    }
+                    DispatchQueue.main.async {
+                    
+                        let valueResult = value as? [String: Any]
+                        if (valueResult!["profileURL"] != nil){
+                            let valueResultDict = valueResult!["profileURL"]! as? NSDictionary
+                            let url = URL(string: "\(valueResultDict!["profileURL"]!)")!
+                            profileButton?.kf.setImage(with: url, for: UIControlState.normal)
+                        }
+                    }
                 }
+            } else {
+                let nameLabel = self.createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_GREY, labelText: "No results", fontSize: 20, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 0, y: 200, width: Int(UIViewController.SCRN_WIDTH ), height:45))
+                nameLabel.textAlignment = .center
+                
+                self.coverView.addSubview(nameLabel)
+                return
+                
             }
             
             //let result = snapshot.value as? NSDictionary //[String : Any] ?? [:]

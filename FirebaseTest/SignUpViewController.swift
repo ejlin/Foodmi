@@ -259,7 +259,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 ref.child("users_id/\((user?.uid)!)/email").setValue(["email" : email!])
                 ref.child("users_id/\((user?.uid)!)/name").setValue(["name" : firstName! + " " + lastName!])
                 //ref.child("usersID/\((user?.uid)!)").setValue(["email": email!])
-                
             }
             let newPageViewController = MainPageController()
             self.present(newPageViewController, animated: false, completion: nil)

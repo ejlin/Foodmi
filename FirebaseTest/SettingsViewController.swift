@@ -42,7 +42,7 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     
     func createSettingsPage() {
-        let backImage = UIImage(named: "back_2")
+        let backImage = UIImage(named: "home_red")
         let backButton = UIButton(frame: CGRect(x: 25, y: 50, width: 36, height: 36))
         backButton.setImage(backImage, for: UIControlState.normal)
         backButton.addTarget(self, action:#selector(buttonPressed), for:.touchUpInside)
