@@ -194,7 +194,7 @@ class MainPageViewController: UIViewController,  CLLocationManagerDelegate, UISc
                                     var currRestaurant = ""
                                     //var currRestaurantPhotoReference = ""
                                     var currPricePoint: Any!
-                                    var currRestaurantID: Any!
+                                    let currRestaurantID: Any!
                                     
                                     
                                     let dictionary = try JSONSerialization.jsonObject(with: data!) as! [String:Any]

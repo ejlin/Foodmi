@@ -277,7 +277,11 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                             tag: -1,
                                             frame: CGRect(x: 20, y: 450, width: UIViewController.SCRN_WIDTH - 40, height: 50))
         
-        let rightArrowFAQ = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 15, width: 25, height: 25))
+        let rightArrowFAQ = createUIImage(imageName: "right_arrow",
+                                          imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70,
+                                                             y: 15,
+                                                             width: 25,
+                                                             height: 25))
         FAQButton.addSubview(rightArrowFAQ)
         
         let aboutButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
@@ -288,9 +292,16 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                               backgroundColor: .clear,
                                               cornerRadius: 5,
                                               tag: -1,
-                                              frame: CGRect(x: 20, y: 500, width: UIViewController.SCRN_WIDTH - 40, height: 50))
+                                              frame: CGRect(x: 20,
+                                                            y: 500,
+                                                            width: UIViewController.SCRN_WIDTH - 40,
+                                                            height: 50))
         
-        let rightArrowAbout = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 15, width: 25, height: 25))
+        let rightArrowAbout = createUIImage(imageName: "right_arrow",
+                                            imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70,
+                                                               y: 15,
+                                                               width: 25,
+                                                               height: 25))
         aboutButton.addSubview(rightArrowAbout)
         
         let reportBugButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
@@ -301,8 +312,10 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                 backgroundColor: .clear,
                                                 cornerRadius: 5,
                                                 tag: -1,
-                                                frame: CGRect(x: 20, y: 550, width: UIViewController.SCRN_WIDTH - 40, height: 50))
-        
+                                                frame: CGRect(x: 20,
+                                                              y: 550,
+                                                              width: UIViewController.SCRN_WIDTH - 40,
+                                                              height: 50))
         reportBugButton.addTarget(self, action: #selector(openReportBug), for: .touchUpInside)
         
         let rightArrowReportBug = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 15, width: 25, height: 25))
@@ -322,15 +335,7 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let rightArrowSignOut = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 15, width: 25, height: 25))
         signOutButton.addSubview(rightArrowSignOut)
-        
-//        let borderLabel = createUILabel(backgroundColor: UIViewController.SCRN_MAIN_COLOR,
-//                                        textColor: .white,
-//                                        labelText: "Version 1.0.0",
-//                                        fontSize: 12,
-//                                        fontName: UIViewController.SCRN_FONT_BOLD,
-//                                        cornerRadius: 0,
-//                                        frame: CGRect(x: 0, y: 650, width: UIViewController.SCRN_WIDTH, height: 35))
-//
+    
         self.view.addSubview(backButton)
         self.settingsScrollView.addSubview(twentyOneLabel)
         self.settingsScrollView.addSubview(twentyOneSwitch)
@@ -350,7 +355,6 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.settingsScrollView.addSubview(reportBugButton)
         self.settingsScrollView.addSubview(aboutButton)
         self.settingsScrollView.addSubview(signOutButton)
-        //self.settingsScrollView.addSubview(borderLabel)
         
         let customViewFrame = CGRect(x: 5,
                                      y:UIViewController.SCRN_HEIGHT + 40,
@@ -366,7 +370,10 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                        fontSize: 0,
                                                        fontName: UIViewController.SCRN_FONT_MEDIUM,
                                                        cornerRadius: 3,
-                                                       frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 20, y: UIViewController.SCRN_HEIGHT, width: 40, height: 5))
+                                                       frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 20,
+                                                                     y: UIViewController.SCRN_HEIGHT,
+                                                                     width: 40,
+                                                                     height: 5))
         view.addSubview(tempView)
         self.view.addSubview(tempBackgroundLabel)
     }
@@ -413,7 +420,7 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc func signOutUser(sender: UIButton!) {
         sender.backgroundColor = UIViewController.SCRN_MAIN_COLOR_DARK
         
-        if let user = Auth.auth().currentUser {
+        if Auth.auth().currentUser != nil {
             do {
             try Auth.auth().signOut()
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: UIViewController.REGISTER_VC)

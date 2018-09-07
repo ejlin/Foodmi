@@ -51,31 +51,35 @@ class ProfileViewController: UIViewController{
                                                    height: 120))
         profileButton.layer.borderWidth = 2.0
         profileButton.layer.cornerRadius = 60
+        profileButton.backgroundColor = UIViewController.SCRN_GREY_LIGHT
         profileButton.layer.borderColor = UIViewController.SCRN_WHITE.cgColor
-        profileButton.setImage(profileImage!, for: UIControlState.normal)
+        profileButton.setImage(profileImage, for: UIControlState.normal)
         profileButton.addTarget(self, action: #selector(self.chooseProfilePicture), for: .touchUpInside)
-
-        let profileImageOverlay = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT,
-                                                     textColor: UIViewController.SCRN_MAIN_COLOR,
-                                                     labelText: "",
-                                                     fontSize: 0,
-                                                     fontName: UIViewController.SCRN_FONT_BOLD,
-                                                     cornerRadius: 0,
-                                                     frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 60,
-                                                                   y: UIViewController.SCRN_HEIGHT*0.5 - 155,
-                                                                   width: 120,
-                                                                   height: 120))
-        profileImageOverlay.layer.cornerRadius = 60
+        profileButton.layer.cornerRadius = min(profileButton.frame.height,profileButton.frame.width) / 2 //you can change the cornerRadius according to your need
+        profileButton.layer.borderColor = UIColor.white.cgColor
+        profileButton.layer.masksToBounds = true
+        
+//        let profileImageOverlay = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT,
+//                                                     textColor: UIViewController.SCRN_MAIN_COLOR,
+//                                                     labelText: "",
+//                                                     fontSize: 0,
+//                                                     fontName: UIViewController.SCRN_FONT_BOLD,
+//                                                     cornerRadius: 0,
+//                                                     frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 60,
+//                                                                   y: UIViewController.SCRN_HEIGHT*0.5 - 155,
+//                                                                   width: 120,
+//                                                                   height: 120))
+//        profileImageOverlay.layer.cornerRadius = 60
     
        // DispatchQueue.main.async {
             let user = Auth.auth().currentUser
             if user != nil && user?.photoURL != nil{
                 //let data = try? Data(contentsOf: (user?.photoURL!)!)
-                profileButton.kf.setImage(with: user?.photoURL, for: UIControlState.normal)
+                print((user?.photoURL)!)
+                let url = URL(string: "\((user?.photoURL)!)")
+                profileButton.kf.setImage(with: url, for: UIControlState.normal)
                 //profileButton.setImage(UIImage(data: data!)?.circle, for: UIControlState.normal)
-                profileButton.layer.cornerRadius = min(profileButton.frame.height,profileButton.frame.width) / 2 //you can change the cornerRadius according to your need
-                profileButton.layer.borderColor = UIColor.white.cgColor
-                profileButton.layer.masksToBounds = true
+                
                 print("here")
             }
         //}
@@ -237,7 +241,7 @@ class ProfileViewController: UIViewController{
             }
         }
         profileScrollView.addSubview(backgroundImage)
-        profileScrollView.addSubview(profileImageOverlay)
+        //profileScrollView.addSubview(profileImageOverlay)
         profileScrollView.addSubview(profileButton)
         profileScrollView.addSubview(showMoreButton)
         profileScrollView.addSubview(addRecommendationsButton)
@@ -254,7 +258,6 @@ class ProfileViewController: UIViewController{
         profileScrollView.addSubview(profilePicturesPlaceholderTwo)
         profileScrollView.addSubview(profilePicturesPlaceholderThree)
     }
-    
     
     @objc func chooseProfilePicture(sender: UIButton) {
         PHPhotoLibrary.requestAuthorization({
@@ -276,7 +279,7 @@ class ProfileViewController: UIViewController{
                     self.profileScrollView.addSubview(activityIndicator)
                     
                     guard let uid = Auth.auth().currentUser?.uid else {return}
-                    guard let imageData = image.jpeg(.low) else {return } //UIImagePNGRepresentation(newImage) else {return}
+                    guard let imageData = image.jpeg(.low) else {return }
                     let profileImageReference = Storage.storage().reference().child("profile_image_url").child("\(uid).png")
                
                     DispatchQueue.main.async {
@@ -288,15 +291,15 @@ class ProfileViewController: UIViewController{
                         uploadTask.observe(.progress, handler: { (snapshot) in
                             print(snapshot.progress?.fractionCompleted ?? "")
                         })
-                    }
-                    DispatchQueue.main.async {
+//                    }
+//                    DispatchQueue.main.async {
                         profileImageReference.downloadURL {url, error in
                             if error != nil {
                             //Handle any errors
                             } else {
                                 let user = Auth.auth().currentUser
                                 let changeRequest = user?.createProfileChangeRequest()
-                                changeRequest?.photoURL = url
+                                changeRequest?.photoURL = url!
                                 changeRequest?.commitChanges { (error) in
                                     let ref = Database.database().reference()
                                     ref.child("users_id/\((user?.uid)!)/profileURL").setValue(["profileURL" : "\(url!)"])

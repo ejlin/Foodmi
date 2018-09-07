@@ -83,7 +83,7 @@ class AddFriendViewController: UIViewController {
             let result = snapshot.value as? NSDictionary
             var count = 0
             if (result != nil) {
-                for (key, value) in result! {
+                for (_, value) in result! {
                     
                     var profileButton: UIButton?
                     DispatchQueue.main.async {
@@ -108,6 +108,12 @@ class AddFriendViewController: UIViewController {
                                                                width: 35,
                                                                height: 35))
                         profileButton?.setImage(profileImage, for: UIControlState.normal)
+                        if (valueResult!["profileURL"] != nil){
+                            let valueResultDict = valueResult!["profileURL"]! as? NSDictionary
+                            print("\(valueResultDict!["profileURL"]!)")
+                            let url = URL(string: "\(valueResultDict!["profileURL"]!)")
+                            profileButton?.kf.setImage(with: url, for: UIControlState.normal)
+                        }
                         count = count + 1
 
                         let nameLabelBorder = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT,
@@ -127,13 +133,7 @@ class AddFriendViewController: UIViewController {
 //                    }
 //                    DispatchQueue.main.async {
 //                        let valueResult = value as? [String: Any]
-                        if (valueResult!["profileURL"] != nil){
-                            let valueResultDict = valueResult!["profileURL"]! as? NSDictionary
-                            let url = URL(string: "\(valueResultDict!["profileURL"]!)")!
-                            let profileImage = UIImage(named: "user")
-                            profileButton?.setImage(profileImage, for: UIControlState.normal)
-                            profileButton?.kf.setImage(with: url, for: UIControlState.normal)
-                        }
+                        
                     }
                 }
             } else {

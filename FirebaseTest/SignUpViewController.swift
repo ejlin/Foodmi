@@ -253,7 +253,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             changeRequest?.commitChanges { (error) in
                 let ref = Database.database().reference()
 
-                let newEmail = self.createNewEmail(oldEmail: email!)
+                _ = self.createNewEmail(oldEmail: email!)
                 
                 ref.child("users_id/\((user?.uid)!)/id").setValue(["id" : (user?.uid)!])
                 ref.child("users_id/\((user?.uid)!)/email").setValue(["email" : email!])
