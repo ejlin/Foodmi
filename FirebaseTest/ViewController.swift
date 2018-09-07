@@ -18,6 +18,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
     }
 }
 
@@ -76,6 +77,18 @@ extension UIImage {
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return result!
+    }
+    
+    enum JPEGQuality: CGFloat {
+        case lowest  = 0
+        case low     = 0.25
+        case medium  = 0.5
+        case high    = 0.75
+        case highest = 1
+    }
+    
+    func jpeg(_ quality: JPEGQuality) -> Data? {
+        return UIImageJPEGRepresentation(self, quality.rawValue)
     }
 }  
 
@@ -195,7 +208,6 @@ extension UIViewController{
      *             .layer.masksToBounds - true by default
      *             .numberOfLines - 0 by default
      */
-
     func createUILabel(backgroundColor: UIColor, textColor: UIColor, labelText: String,
                        fontSize: CGFloat, fontName: String, cornerRadius: CGFloat,
                        frame: CGRect) -> UILabel{
@@ -220,7 +232,6 @@ extension UIViewController{
      * Description: This function will create a UIImage according to the specified parameters and then add
      * it to the current viewController's view.
      */
-
     func createUIImage(imageName: String, imageFrame: CGRect) -> UIImageView{
         let myImage = UIImage(named: imageName)
         let myImageView = UIImageView(image: myImage!)
@@ -240,7 +251,6 @@ extension UIViewController{
      * Description: This function will create a UITextField according to the specified parameters and then add
      * it to the current viewController's view.
      */
-
     func createUITextField(placeholder: String, textColor: UIColor, bottomLineColor: UIColor, isSecureTextEntry: Bool, frame: CGRect) -> UITextField{
         let myTextField = UITextField(frame: frame)
         myTextField.placeholder = placeholder
@@ -277,7 +287,6 @@ extension UIViewController{
      *             identifier: String - This will identify which view called this page and color in the tab in the navigation bar accordingly.
      * Description: This function will create a navigation bar at the bottom of our page for every View Controller.
      */
-    
     func createNavigationBar(withIdentifier identifier: String) {
         
         let GRAPHIC_SIZE = CGFloat(30)
@@ -376,7 +385,6 @@ extension UIViewController{
      *             sender: UIButton - This is the button that was pressed to call this function
      * Description: This function will decide which page to navigate to for the navigation bar at the bottom of the application.
      */
-    
     @objc func navigatePages(sender: UIButton) {
         
         /* Declare our variables to set according to which page we wish to switch to */

@@ -23,10 +23,10 @@ class NotificationViewController: UIViewController {
     }
     
     func createNotificationView() {
-        let backImage = UIImage(named: "home_red")
+        let backImage = UIImage(named: "notification_red")
         let backButton = UIButton(frame: CGRect(x: 25, y: 50, width: 36, height: 36))
         backButton.setImage(backImage, for: UIControlState.normal)
-        backButton.addTarget(self, action:#selector(buttonPressed), for:.touchUpInside)
+        //backButton.addTarget(self, action:#selector(buttonPressed), for:.touchUpInside)
         
         
         let notificationsLabel = self.createUILabel(backgroundColor: .clear,

@@ -21,7 +21,7 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
         super.init()
     }
     
-    func pickImage(_ viewController: UIViewController, _ callback: @escaping ((UIImage) -> ())) {
+    @objc func pickImage(_ viewController: UIViewController, _ callback: @escaping ((UIImage) -> ())) {
         pickImageCallback = callback;
         self.viewController = viewController;
         

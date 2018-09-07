@@ -21,7 +21,7 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
 
         reauthenticateView?.isHidden = true
-        settingsScrollView.contentSize = CGSize(width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT + 18)
+        settingsScrollView.contentSize = CGSize(width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT - 17)
         settingsScrollView.bounces = (settingsScrollView.contentOffset.y > 100);
         createSettingsPage()
         
@@ -42,13 +42,12 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     
     func createSettingsPage() {
-        let backImage = UIImage(named: "home_red")
-        let backButton = UIButton(frame: CGRect(x: 25, y: 50, width: 36, height: 36))
+        let backImage = UIImage(named: "settings_red")
+        let backButton = UIButton(frame: CGRect(x: 25,
+                                                y: 50,
+                                                width: 36,
+                                                height: 36))
         backButton.setImage(backImage, for: UIControlState.normal)
-        backButton.addTarget(self, action:#selector(buttonPressed), for:.touchUpInside)
-        backButton.tag = 4
-        //self.view.addSubview(backButton)
-        
         
         let settingsLabel = self.createUILabel(backgroundColor: .clear,
                           textColor: UIViewController.SCRN_BLACK,
@@ -56,21 +55,34 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                           fontSize: 24,
                           fontName: UIViewController.SCRN_FONT_BOLD,
                           cornerRadius: 18,
-                          frame: CGRect(x: 80, y: 50, width: 130, height: 36))
+                          frame: CGRect(x: 80,
+                                        y: 50,
+                                        width: 130,
+                                        height: 36))
         settingsLabel.textAlignment = .left
         
-        _ = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT, textColor: .clear, labelText: "", fontSize: 0, fontName: UIViewController.SCRN_FONT_MEDIUM, cornerRadius: 0, frame: CGRect(x: 0, y: 102, width: Int(UIViewController.SCRN_WIDTH), height: 1))
-        
-//        let preferencesLabel = self.createUILabel(backgroundColor: UIViewController.SCRN_MAIN_COLOR,
-//                                             textColor: UIViewController.SCRN_WHITE,
-//                                             labelText: "Preferences Settings",
-//                                             fontSize: 18,
-//                                             fontName: UIViewController.SCRN_FONT_BOLD,
-//                                             cornerRadius: 0,
-//                                             frame: CGRect(x: 0, y: 0, width: UIViewController.SCRN_WIDTH , height: 35))
+        _ = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT,
+                               textColor: .clear,
+                               labelText: "",
+                               fontSize: 0,
+                               fontName: UIViewController.SCRN_FONT_MEDIUM,
+                               cornerRadius: 0,
+                               frame: CGRect(x: 0,
+                                             y: 102,
+                                             width: Int(UIViewController.SCRN_WIDTH),
+                                             height: 1))
         
         for i in 0...12{
-            let border = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT, textColor: .clear, labelText: "", fontSize: 0, fontName: UIViewController.SCRN_FONT_MEDIUM, cornerRadius: 0, frame: CGRect(x: 0, y: i * 50, width: Int(UIViewController.SCRN_WIDTH), height: 1))
+            let border = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT,
+                                            textColor: .clear,
+                                            labelText: "",
+                                            fontSize: 0,
+                                            fontName: UIViewController.SCRN_FONT_MEDIUM,
+                                            cornerRadius: 0,
+                                            frame: CGRect(x: 0,
+                                                          y: i * 50,
+                                                          width: Int(UIViewController.SCRN_WIDTH),
+                                                          height: 1))
             self.settingsScrollView.addSubview(border)
         }
         
@@ -80,9 +92,15 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                 fontSize: 16,
                                                 fontName: UIViewController.SCRN_FONT_BOLD,
                                                 cornerRadius: 0,
-                                                frame: CGRect(x: 20, y: 13, width: UIViewController.SCRN_WIDTH - 120, height: 30))
+                                                frame: CGRect(x: 20,
+                                                              y: 13,
+                                                              width: UIViewController.SCRN_WIDTH - 120,
+                                                              height: 30))
         twentyOneLabel.textAlignment = .left
-        let twentyOneSwitch = UISwitch(frame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 10, width: 50, height: 30))
+        let twentyOneSwitch = UISwitch(frame: CGRect(x: UIViewController.SCRN_WIDTH - 70,
+                                                     y: 10,
+                                                     width: 50,
+                                                     height: 30))
         twentyOneSwitch.tintColor = UIViewController.SCRN_GREY
         twentyOneSwitch.onTintColor = UIViewController.SCRN_GREY
         twentyOneSwitch.isOn = true
@@ -95,7 +113,16 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                    backgroundColor: .clear,
                                                    cornerRadius: 0,
                                                    tag: -1,
-                                                   frame: CGRect(x: 20, y: 60, width: UIViewController.SCRN_WIDTH, height: 30))
+                                                   frame: CGRect(x: 20,
+                                                                 y: 50,
+                                                                 width: UIViewController.SCRN_WIDTH,
+                                                                 height: 50))
+        
+        let rightArrowCard = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70,
+                                                                                        y: 15,
+                                                                                        width: 25,
+                                                                                        height: 25))
+        creditCardButton.addSubview(rightArrowCard)
         
         let privacyButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
                                                    titleText: "Privacy",
@@ -105,7 +132,16 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                    backgroundColor: .clear,
                                                    cornerRadius: 0,
                                                    tag: -1,
-                                                   frame: CGRect(x: 20, y: 110, width: UIViewController.SCRN_WIDTH, height: 30))
+                                                   frame: CGRect(x: 20,
+                                                                 y: 100,
+                                                                 width: UIViewController.SCRN_WIDTH,
+                                                                 height: 50))
+        
+        let rightArrowPrivacy = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70,
+                                                                                           y: 15,
+                                                                                           width: 25,
+                                                                                           height: 25))
+        privacyButton.addSubview(rightArrowPrivacy)
         
         let notificationsButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
                                                    titleText: "Notifications",
@@ -115,32 +151,57 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                    backgroundColor: .clear,
                                                    cornerRadius: 0,
                                                    tag: -1,
-                                                   frame: CGRect(x: 20, y: 160, width: UIViewController.SCRN_WIDTH, height: 30))
+                                                   frame: CGRect(x: 20,
+                                                                 y: 150,
+                                                                 width: UIViewController.SCRN_WIDTH,
+                                                                 height: 50))
+        
+        let rightArrowNotifications = createUIImage(imageName: "right_arrow",
+                                                    imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70,
+                                                                       y: 15,
+                                                                       width: 25,
+                                                                       height: 25))
+        notificationsButton.addSubview(rightArrowNotifications)
     
         
         let changeFirstNameTextField = createUITextField(placeholder: "Change First Name",
                                                          textColor: UIViewController.SCRN_GREY,
                                                          bottomLineColor: .clear, //UIViewController.SCRN_GREY,
                                                          isSecureTextEntry: false,
-                                                         frame: CGRect(x: 20, y: 210, width: UIViewController.SCRN_WIDTH - 90, height: 30))
-        changeFirstNameTextField.font = UIFont(name: UIViewController.SCRN_FONT_MEDIUM, size: 16)
+                                                         frame: CGRect(x: 20,
+                                                                       y: 200,
+                                                                       width: UIViewController.SCRN_WIDTH - 90,
+                                                                       height: 50))
+        changeFirstNameTextField.font = UIFont(name: UIViewController.SCRN_FONT_MEDIUM,
+                                               size: 16)
         
         let saveFirstNameImage = UIImage(named: "save")
-        let saveFirstNameButton = DisplayNameUIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50, y: 210, width: 30, height: 30))
+        let saveFirstNameButton = DisplayNameUIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50,
+                                                                    y: 210,
+                                                                    width: 30,
+                                                                    height: 30))
         saveFirstNameButton.setImage(saveFirstNameImage, for: UIControlState.normal)
         saveFirstNameButton.firstName = changeFirstNameTextField
         saveFirstNameButton.lastName = nil
-        saveFirstNameButton.addTarget(self, action:#selector(changeDisplayName), for:.touchUpInside)
+        saveFirstNameButton.addTarget(self,
+                                      action:#selector(changeDisplayName),
+                                      for:.touchUpInside)
         
         let changeLastNameTextField = createUITextField(placeholder: "Change Last Name",
                                                         textColor: UIViewController.SCRN_GREY,
                                                         bottomLineColor: .clear, //UIViewController.SCRN_GREY,
                                                         isSecureTextEntry: false,
-                                                        frame: CGRect(x: 20, y: 260, width: UIViewController.SCRN_WIDTH - 90, height: 30))
+                                                        frame: CGRect(x: 20,
+                                                                      y: 250,
+                                                                      width: UIViewController.SCRN_WIDTH - 90,
+                                                                      height: 50))
         changeLastNameTextField.font = UIFont(name: UIViewController.SCRN_FONT_MEDIUM, size: 16)
         
         let saveLastNameImage = UIImage(named: "save")
-        let saveLastNameButton = DisplayNameUIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50, y: 260, width: 30, height: 30))
+        let saveLastNameButton = DisplayNameUIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50,
+                                                                   y: 260,
+                                                                   width: 30,
+                                                                   height: 30))
         saveLastNameButton.setImage(saveLastNameImage, for: UIControlState.normal)
         saveLastNameButton.firstName = nil
         saveLastNameButton.lastName = changeLastNameTextField
@@ -150,11 +211,17 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                      textColor: UIViewController.SCRN_GREY,
                                                      bottomLineColor: .clear, //UIViewController.SCRN_GREY,
                                                      isSecureTextEntry: false,
-                                                     frame: CGRect(x: 20, y: 310, width: UIViewController.SCRN_WIDTH - 90, height: 30))
+                                                     frame: CGRect(x: 20,
+                                                                   y: 300,
+                                                                   width: UIViewController.SCRN_WIDTH - 90,
+                                                                   height: 50))
         changeEmailTextField.font = UIFont(name: UIViewController.SCRN_FONT_MEDIUM, size: 16)
         
         let saveEmailImage = UIImage(named: "save")
-        let saveEmailButton = AuthenticateRequiredUIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50, y: 310, width: 30, height: 30))
+        let saveEmailButton = AuthenticateRequiredUIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50,
+                                                                         y: 310,
+                                                                         width: 30,
+                                                                         height: 30))
         saveEmailButton.setImage(saveEmailImage, for: UIControlState.normal)
         saveEmailButton.addTarget(self, action:#selector(changeValueRequiringReauthentication), for:.touchUpInside)
         saveEmailButton.email = changeEmailTextField
@@ -164,11 +231,17 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                         textColor: UIViewController.SCRN_GREY,
                                                         bottomLineColor: .clear, //UIViewController.SCRN_GREY,
                                                         isSecureTextEntry: true,
-                                                        frame: CGRect(x: 20, y: 360, width: UIViewController.SCRN_WIDTH - 90, height: 30))
+                                                        frame: CGRect(x: 20,
+                                                                      y: 350,
+                                                                      width: UIViewController.SCRN_WIDTH - 90,
+                                                                      height: 50))
         changePasswordTextField.font = UIFont(name: UIViewController.SCRN_FONT_MEDIUM, size: 16)
         
         let savePasswordImage = UIImage(named: "save")
-        let savePasswordButton = AuthenticateRequiredUIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50, y: 360, width: 30, height: 30))
+        let savePasswordButton = AuthenticateRequiredUIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 50,
+                                                                            y: 360,
+                                                                            width: 30,
+                                                                            height: 30))
         savePasswordButton.setImage(savePasswordImage, for: UIControlState.normal)
         savePasswordButton.addTarget(self, action:#selector(changeValueRequiringReauthentication), for:.touchUpInside)
         savePasswordButton.password = changePasswordTextField
@@ -182,7 +255,17 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                               backgroundColor: .clear,
                                               cornerRadius: 5,
                                               tag: -1,
-                                              frame: CGRect(x: 20, y: 410, width: UIViewController.SCRN_WIDTH - 40, height: 30))
+                                              frame: CGRect(x: 20,
+                                                            y: 400,
+                                                            width: UIViewController.SCRN_WIDTH - 40,
+                                                            height: 50))
+        
+        let rightArrowTerms = createUIImage(imageName: "right_arrow",
+                                            imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70,
+                                                               y: 15,
+                                                               width: 25,
+                                                               height: 25))
+        termsButton.addSubview(rightArrowTerms)
         
         let FAQButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
                                             titleText: "FAQ",
@@ -192,7 +275,10 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                             backgroundColor: .clear,
                                             cornerRadius: 5,
                                             tag: -1,
-                                            frame: CGRect(x: 20, y: 460, width: UIViewController.SCRN_WIDTH - 40, height: 30))
+                                            frame: CGRect(x: 20, y: 450, width: UIViewController.SCRN_WIDTH - 40, height: 50))
+        
+        let rightArrowFAQ = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 15, width: 25, height: 25))
+        FAQButton.addSubview(rightArrowFAQ)
         
         let aboutButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
                                               titleText: "About",
@@ -202,7 +288,10 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                               backgroundColor: .clear,
                                               cornerRadius: 5,
                                               tag: -1,
-                                              frame: CGRect(x: 20, y: 510, width: UIViewController.SCRN_WIDTH - 40, height: 30))
+                                              frame: CGRect(x: 20, y: 500, width: UIViewController.SCRN_WIDTH - 40, height: 50))
+        
+        let rightArrowAbout = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 15, width: 25, height: 25))
+        aboutButton.addSubview(rightArrowAbout)
         
         let reportBugButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
                                                 titleText: "Report a Bug",
@@ -212,8 +301,13 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                 backgroundColor: .clear,
                                                 cornerRadius: 5,
                                                 tag: -1,
-                                                frame: CGRect(x: 20, y: 560, width: UIViewController.SCRN_WIDTH - 40, height: 30))
+                                                frame: CGRect(x: 20, y: 550, width: UIViewController.SCRN_WIDTH - 40, height: 50))
+        
         reportBugButton.addTarget(self, action: #selector(openReportBug), for: .touchUpInside)
+        
+        let rightArrowReportBug = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 15, width: 25, height: 25))
+        reportBugButton.addSubview(rightArrowReportBug)
+        
         
         let signOutButton = self.createUIButton(textColor: UIViewController.SCRN_GREY,
                                                 titleText: "Sign Out",
@@ -223,17 +317,20 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
                                                 backgroundColor: .clear,
                                                 cornerRadius: 5,
                                                 tag: -1,
-                                                frame: CGRect(x: 20, y: 610, width: UIViewController.SCRN_WIDTH - 40, height: 30))
+                                                frame: CGRect(x: 20, y: 600, width: UIViewController.SCRN_WIDTH - 40, height: 50))
         signOutButton.addTarget(self, action: #selector(self.signOutUser), for: .touchUpInside)
         
-        let borderLabel = createUILabel(backgroundColor: UIViewController.SCRN_MAIN_COLOR,
-                                        textColor: .white,
-                                        labelText: "Version 1.0.0",
-                                        fontSize: 12,
-                                        fontName: UIViewController.SCRN_FONT_BOLD,
-                                        cornerRadius: 0,
-                                        frame: CGRect(x: 0, y: 650, width: UIViewController.SCRN_WIDTH, height: 35))
+        let rightArrowSignOut = createUIImage(imageName: "right_arrow", imageFrame: CGRect(x: UIViewController.SCRN_WIDTH - 70, y: 15, width: 25, height: 25))
+        signOutButton.addSubview(rightArrowSignOut)
         
+//        let borderLabel = createUILabel(backgroundColor: UIViewController.SCRN_MAIN_COLOR,
+//                                        textColor: .white,
+//                                        labelText: "Version 1.0.0",
+//                                        fontSize: 12,
+//                                        fontName: UIViewController.SCRN_FONT_BOLD,
+//                                        cornerRadius: 0,
+//                                        frame: CGRect(x: 0, y: 650, width: UIViewController.SCRN_WIDTH, height: 35))
+//
         self.view.addSubview(backButton)
         self.settingsScrollView.addSubview(twentyOneLabel)
         self.settingsScrollView.addSubview(twentyOneSwitch)
@@ -253,7 +350,7 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.settingsScrollView.addSubview(reportBugButton)
         self.settingsScrollView.addSubview(aboutButton)
         self.settingsScrollView.addSubview(signOutButton)
-        self.settingsScrollView.addSubview(borderLabel)
+        //self.settingsScrollView.addSubview(borderLabel)
         
         let customViewFrame = CGRect(x: 5,
                                      y:UIViewController.SCRN_HEIGHT + 40,

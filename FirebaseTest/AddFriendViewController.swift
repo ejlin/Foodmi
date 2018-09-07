@@ -90,44 +90,72 @@ class AddFriendViewController: UIViewController {
                         let valueResult = value as? [String: Any]
                         let valueResultDict = valueResult!["name"]! as? NSDictionary
                         
-                        let nameLabel = self.createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_BLACK, labelText: "\(valueResultDict!["name"]!)", fontSize: 20, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 75, y: 45*count, width: Int(UIViewController.SCRN_WIDTH - 80), height: 45))
+                        let nameLabel = self.createUILabel(backgroundColor: .clear,
+                                                           textColor: UIViewController.SCRN_BLACK,
+                                                           labelText: "\(valueResultDict!["name"]!)",
+                                                           fontSize: 20,
+                                                           fontName: UIViewController.SCRN_FONT_BOLD,
+                                                           cornerRadius: 0,
+                                                           frame: CGRect(x: 75,
+                                                                         y: 45*count,
+                                                                         width: Int(UIViewController.SCRN_WIDTH - 80),
+                                                                         height: 45))
                         nameLabel.textAlignment = .left
+                        
                         let profileImage = UIImage(named: "user")
-                        profileButton = UIButton(frame: CGRect(x: 30, y: 45*count + 5, width: 35, height: 35))
+                        profileButton = UIButton(frame: CGRect(x: 30,
+                                                               y: 45*count + 5,
+                                                               width: 35,
+                                                               height: 35))
                         profileButton?.setImage(profileImage, for: UIControlState.normal)
                         count = count + 1
 
-                        let nameLabelBorder = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT, textColor: .clear, labelText: "", fontSize: 0, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 20, y: 45*count, width: Int(UIViewController.SCRN_WIDTH - 40), height: 1))
+                        let nameLabelBorder = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT,
+                                                                 textColor: .clear,
+                                                                 labelText: "",
+                                                                 fontSize: 0,
+                                                                 fontName: UIViewController.SCRN_FONT_BOLD,
+                                                                 cornerRadius: 0,
+                                                                 frame: CGRect(x: 20,
+                                                                               y: 45*count,
+                                                                               width: Int(UIViewController.SCRN_WIDTH - 40),
+                                                                               height: 1))
                     
                         self.coverView.addSubview(nameLabel)
                         self.coverView.addSubview(profileButton!)
                         self.coverView.addSubview(nameLabelBorder)
-                    }
-                    DispatchQueue.main.async {
-                    
-                        let valueResult = value as? [String: Any]
+//                    }
+//                    DispatchQueue.main.async {
+//                        let valueResult = value as? [String: Any]
                         if (valueResult!["profileURL"] != nil){
                             let valueResultDict = valueResult!["profileURL"]! as? NSDictionary
                             let url = URL(string: "\(valueResultDict!["profileURL"]!)")!
+                            let profileImage = UIImage(named: "user")
+                            profileButton?.setImage(profileImage, for: UIControlState.normal)
                             profileButton?.kf.setImage(with: url, for: UIControlState.normal)
                         }
                     }
                 }
             } else {
-                let nameLabel = self.createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_GREY, labelText: "No results", fontSize: 20, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: 0, y: 200, width: Int(UIViewController.SCRN_WIDTH ), height:45))
+                let nameLabel = self.createUILabel(backgroundColor: .clear,
+                                                   textColor: UIViewController.SCRN_GREY,
+                                                   labelText: "No results",
+                                                   fontSize: 20,
+                                                   fontName: UIViewController.SCRN_FONT_BOLD,
+                                                   cornerRadius: 0,
+                                                   frame: CGRect(x: 0,
+                                                                 y: 200,
+                                                                 width: Int(UIViewController.SCRN_WIDTH ),
+                                                                 height:45))
                 nameLabel.textAlignment = .center
-                
                 self.coverView.addSubview(nameLabel)
                 return
                 
             }
-            
             //let result = snapshot.value as? NSDictionary //[String : Any] ?? [:]
-            
         }) { (err) in
             print(err)
         }
-        
     }
     
     @objc func closeViewController() {

@@ -32,6 +32,10 @@
                                 <color key="pageIndicatorTintColor" red="0.91372549020000005" green="0.92156862750000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="StartedBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Cms-p6-1ZD">
+                                <rect key="frame" x="72" y="112" width="231" height="443"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="gih-P0-9fl"/>
@@ -39,7 +43,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f6Z-3Z-q0j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2930" y="-433"/>
+            <point key="canvasLocation" x="2928.8000000000002" y="-433.13343328335833"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="kJV-sd-SpF">
@@ -286,4 +290,7 @@
             <point key="canvasLocation" x="5849" y="268"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="StartedBackground" width="838" height="1706"/>
+    </resources>
 </document>
