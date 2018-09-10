@@ -196,7 +196,6 @@ class MainPageViewController: UIViewController,  CLLocationManagerDelegate, UISc
                                     var currPricePoint: Any!
                                     var currRestaurantID: Any!
                                     
-                                    
                                     let dictionary = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
                                     if let items = dictionary["nearby_restaurants"] as? [[String:Any]] {
                                         DispatchQueue.main.async{

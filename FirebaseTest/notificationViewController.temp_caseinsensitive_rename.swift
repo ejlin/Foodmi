@@ -2,25 +2,21 @@
 //  NotificationViewController.swift
 //  FirebaseTest
 //
-//  Created by Eric Lin on 9/9/18.
+//  Created by Xinrui Zhou on 9/5/18.
 //  Copyright © 2018 Eric Lin. All rights reserved.
 //
 
 import UIKit
 
-class NotificationViewController: UIViewController {
+class notificationViewController: UIViewController {
 
-    @IBOutlet weak var notificationScrollView: UIScrollView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createNavigationBar(withIdentifier: "notification")
         createNotificationView()
-        notificationScrollView.contentSize = CGSize(width: UIViewController.SCRN_WIDTH, height: UIViewController.SCRN_HEIGHT - 150)
-        notificationScrollView.bounces = (notificationScrollView.contentOffset.y > 100);
         // Do any additional setup after loading the view.
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -33,23 +29,20 @@ class NotificationViewController: UIViewController {
         //backButton.addTarget(self, action:#selector(buttonPressed), for:.touchUpInside)
         
         let notificationsLabel = self.createUILabel(backgroundColor: .clear,
-                                                    textColor: UIViewController.SCRN_BLACK,
-                                                    labelText: "Notifications",
-                                                    fontSize: 24,
-                                                    fontName: UIViewController.SCRN_FONT_BOLD,
-                                                    cornerRadius: 18,
-                                                    frame: CGRect(x: 80, y: 50, width: 130, height: 36))
+                                               textColor: UIViewController.SCRN_BLACK,
+                                               labelText: "Notifications",
+                                               fontSize: 24,
+                                               fontName: UIViewController.SCRN_FONT_BOLD,
+                                               cornerRadius: 18,
+                                               frame: CGRect(x: 80, y: 50, width: 130, height: 36))
         notificationsLabel.textAlignment = .left
         
         _ = self.createUILabel(backgroundColor: UIViewController.SCRN_GREY_LIGHT, textColor: .clear, labelText: "", fontSize: 0, fontName: UIViewController.SCRN_FONT_MEDIUM, cornerRadius: 0, frame: CGRect(x: 0, y: 102, width: Int(UIViewController.SCRN_WIDTH), height: 1))
         
         self.view.addSubview(backButton)
         self.view.addSubview(notificationsLabel)
-        
-        let notificationLabel = createUILabel(backgroundColor: .clear, textColor: UIViewController.SCRN_GREY_LIGHT, labelText: "No notifications", fontSize: 24, fontName: UIViewController.SCRN_FONT_BOLD, cornerRadius: 0, frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 100, y: UIViewController.SCRN_HEIGHT*0.5 - 25, width: 200, height: 50))
-        
-        self.view.addSubview(notificationLabel)
     }
+    
     
     @objc func buttonPressed(sender: UIButton!) {
         
@@ -69,7 +62,7 @@ class NotificationViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
+        // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
     */

@@ -41,7 +41,7 @@ class AddFriendViewController: UIViewController {
         textFieldInsideSearchBar?.addTarget(self, action: #selector(searchFriends), for: .editingChanged)
         
         let closeImage = UIImage(named: "close")
-        let closeButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 55, y: 52, width: 35, height: 35))
+        let closeButton = UIButton(frame: CGRect(x: UIViewController.SCRN_WIDTH - 45, y: 60, width: 20, height: 20))
         closeButton.setImage(closeImage, for: UIControlState.normal)
         closeButton.addTarget(self, action: #selector(closeViewController), for: .touchUpInside)
         

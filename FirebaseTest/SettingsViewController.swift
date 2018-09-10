@@ -418,7 +418,6 @@ class SettingsViewController: UIViewController, UIGestureRecognizerDelegate {
      * Description: This function handles signing out a user by calling Firebase's signOut method.
      */
     @objc func signOutUser(sender: UIButton!) {
-        sender.backgroundColor = UIViewController.SCRN_MAIN_COLOR_DARK
         
         if Auth.auth().currentUser != nil {
             do {

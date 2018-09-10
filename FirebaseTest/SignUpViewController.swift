@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseAuth
+import MaterialComponents.MaterialActivityIndicator
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
@@ -218,7 +219,25 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         
         /* Display loading activity indicator */
-        self.view.showActivityIndicator()
+//        self.view.showActivityIndicator()
+        let coverView = UIView(frame: CGRect(x: 0,
+                                             y: 150,
+                                             width: UIViewController.SCRN_WIDTH,
+                                             height: UIViewController.SCRN_HEIGHT - 150))
+        coverView.backgroundColor = UIViewController.SCRN_WHITE
+        
+        let activityIndicator = MDCActivityIndicator(frame: CGRect(x: UIViewController.SCRN_WIDTH*0.5 - 25,
+                                                                   y: UIViewController.SCRN_HEIGHT*0.5 - 100,
+                                                                   width: 50,
+                                                                   height: 50))
+        activityIndicator.sizeToFit()
+        activityIndicator.cycleColors = [UIViewController.SCRN_MAIN_COLOR]
+        activityIndicator.startAnimating()
+        coverView.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
+        self.view.addSubview(coverView)
+
         
         /* Call Firebase's createUserWithEmail to create a new user */
         Auth.auth().createUser(withEmail: email!, password: password!) { (authResult, error) in
@@ -238,7 +257,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                                                                                     attributes: [NSAttributedStringKey.foregroundColor: UIViewController.SCRN_INVALID_INPUT_RED])
                         sender.confirmPassword?.attributedPlaceholder = NSAttributedString(string: "Weak Password",
                                                                                            attributes: [NSAttributedStringKey.foregroundColor : UIViewController.SCRN_INVALID_INPUT_RED])
-                        self.view.hideActivityIndicator()
                         return
                     default:
                         return
@@ -246,24 +264,39 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 }
                 return
             }
-            /* Update our user's display name in Firebase */
-            let user = Auth.auth().currentUser
-            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-            changeRequest?.displayName = firstName! + " " + lastName!
-            changeRequest?.commitChanges { (error) in
+        }
+        /* Update our user's display name in Firebase */
+        let user = Auth.auth().currentUser
+        let changeRequest = user?.createProfileChangeRequest()
+        changeRequest?.displayName = firstName! + " " + lastName!
+        changeRequest?.commitChanges { (error) in
+            if error != nil {
+                print(error!)
+            } else {
                 let ref = Database.database().reference()
-
-                _ = self.createNewEmail(oldEmail: email!)
+                //_ = self.createNewEmail(oldEmail: email!)
                 
                 ref.child("users_id/\((user?.uid)!)/id").setValue(["id" : (user?.uid)!])
                 ref.child("users_id/\((user?.uid)!)/email").setValue(["email" : email!])
                 ref.child("users_id/\((user?.uid)!)/name").setValue(["name" : firstName! + " " + lastName!])
+                activityIndicator.stopAnimating()
                 //ref.child("usersID/\((user?.uid)!)").setValue(["email": email!])
+                //let newPageViewController = MainPageController()
+                let mainPageViewController = MainPageViewController()
+//                newPageViewController.setViewControllers([mainPageViewController], direction: .forward, animated: false, completion: nil)
+//                self.show(newPageViewController, sender: self)
+                
+                let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+                appDelegate.window?.rootViewController = mainPageViewController
+                
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: UIViewController.MAIN_PAGE_VC)
+                self.show(vc, sender: self)
+                
+                coverView.removeFromSuperview()
+                activityIndicator.stopAnimating()
+                ///ref.child("usersEmail/\(email!)").setValue(["uid": (user?.uid)!])
+                return
             }
-            let newPageViewController = MainPageController()
-            self.present(newPageViewController, animated: false, completion: nil)
-            ///ref.child("usersEmail/\(email!)").setValue(["uid": (user?.uid)!])
-            
         }
         return
     }
